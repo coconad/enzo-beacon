@@ -1,4 +1,4 @@
-import { STAGE_FIT, SIGNAL_WEIGHT } from '../data/seed.js';
+import { STAGE_FIT, SIGNAL_WEIGHT, SIGNAL_TIMING_WEIGHT } from '../data/seed.js';
 
 export const TODAY = new Date("2026-05-18");
 
@@ -16,12 +16,21 @@ export function freshness(d) {
   return Math.exp(-daysSince(d) / 18);
 }
 
+export function signalTiming(r) {
+  if (r.signal_timing) return r.signal_timing;
+  if (r.signalType === 'Funding') return 'post-raise';
+  if (r.stage === 'Stealth' && r.signalType === 'Career move') return 'pre-product';
+  if (r.stage === 'Stealth') return 'pre-product';
+  return 'pre-raise';
+}
+
 export function scoreFor(r, weights) {
   const f = freshness(r.signalDate);
   const s = STAGE_FIT[r.stage] ?? 0.5;
   const g = r.soeu ? 1.0 : 0.35;
   const q = SIGNAL_WEIGHT[r.signalType] ?? 0.6;
-  return Math.round((f * weights.fresh + s * weights.stage + g * weights.soeu + q * weights.signal));
+  const t = SIGNAL_TIMING_WEIGHT[signalTiming(r)] ?? 1.0;
+  return Math.round((f * weights.fresh + s * weights.stage + g * weights.soeu + q * weights.signal) * t);
 }
 
 export function stageTone(stage) {

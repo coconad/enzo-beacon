@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { SOURCES, DEFAULTS } from '../../data/seed.js';
 import { scoreFor, TODAY } from '../../utils/scoring.js';
 
@@ -13,9 +13,13 @@ function buildSlackDigest(state) {
   return lines.join('\n');
 }
 
+const TIMING_LABEL = { 'pre-product': 'pre-product', 'pre-raise': 'pre-raise', 'post-raise': 'post-raise' };
+const TIMING_COLOR = { 'pre-product': 'var(--olive)', 'pre-raise': 'var(--accent)', 'post-raise': 'var(--muted, #888)' };
+
 export default function SettingsView({ state, setWeights, resetWeights, setDigestSize, setSlackWebhook, importState, resetToSeed, onToast }) {
   const { weights, digestSize, slackWebhook } = state;
   const fileRef = useRef();
+  const [sourceFilter, setSourceFilter] = useState('all');
 
   function updateWeight(key, val) {
     setWeights({ ...weights, [key]: +val });
@@ -117,16 +121,59 @@ export default function SettingsView({ state, setWeights, resetWeights, setDiges
 
         <div className="card" style={{ gridColumn: '1/-1' }}>
           <h3>Signal sources Beacon is monitoring</h3>
-          <div className="page-sub" style={{ marginBottom: 8 }}>
+          <div className="page-sub" style={{ marginBottom: 10 }}>
             Open these in the morning to scan for new entries. Drop the URL into "Add founder" with notes and Beacon scores it automatically.
           </div>
-          <div className="grid cols-3">
-            {SOURCES.map(s => (
-              <div className="card" key={s.url}>
-                <h3><a href={s.url} target="_blank" rel="noopener noreferrer">{s.name} ↗</a></h3>
-                <div className="page-sub">{s.note}</div>
-              </div>
+          <div style={{ display: 'flex', gap: 6, marginBottom: 14 }}>
+            {['all', 'pre-product', 'pre-raise'].map(f => (
+              <button
+                key={f}
+                className="btn"
+                onClick={() => setSourceFilter(f)}
+                style={{
+                  opacity: sourceFilter === f ? 1 : 0.5,
+                  fontWeight: sourceFilter === f ? 700 : 400,
+                  textTransform: 'capitalize',
+                }}
+              >
+                {f === 'all' ? 'All' : f}
+              </button>
             ))}
+          </div>
+          <div className="grid cols-3">
+            {SOURCES
+              .filter(s => sourceFilter === 'all' || s.signal_timing === sourceFilter)
+              .map(s => {
+                const isPostRaise = s.signal_timing === 'post-raise';
+                return (
+                  <div
+                    className="card"
+                    key={s.url}
+                    style={isPostRaise ? { opacity: 0.45, filter: 'grayscale(0.6)' } : undefined}
+                  >
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
+                      <span style={{
+                        fontSize: 10,
+                        fontWeight: 600,
+                        letterSpacing: '0.04em',
+                        textTransform: 'uppercase',
+                        padding: '2px 7px',
+                        borderRadius: 4,
+                        background: TIMING_COLOR[s.signal_timing] ?? 'var(--muted, #888)',
+                        color: '#fff',
+                        flexShrink: 0,
+                      }}>
+                        {TIMING_LABEL[s.signal_timing] ?? s.signal_timing}
+                      </span>
+                    </div>
+                    <h3 style={{ marginTop: 2 }}>
+                      <a href={s.url} target="_blank" rel="noopener noreferrer">{s.name} ↗</a>
+                    </h3>
+                    <div className="page-sub">{s.note}</div>
+                  </div>
+                );
+              })
+            }
           </div>
         </div>
 

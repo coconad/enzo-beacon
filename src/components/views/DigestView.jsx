@@ -1,8 +1,19 @@
+import { useState, useCallback } from 'react';
 import { scoreFor, isEarliest, daysSince, fmtDate, TODAY } from '../../utils/scoring.js';
 import FounderCard from '../FounderCard.jsx';
 
 export default function DigestView({ state, setEarliestOnly, onAdd, onDraft, onEdit }) {
   const { records, weights, digestSize, earliestOnly } = state;
+  const [refreshing, setRefreshing] = useState(false);
+  const [lastRefreshed, setLastRefreshed] = useState(null);
+
+  const rerun = useCallback(() => {
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+      setLastRefreshed(new Date());
+    }, 600);
+  }, []);
 
   const allRanked = records.map(r => ({ ...r, score: scoreFor(r, weights) })).sort((a, b) => b.score - a.score);
   const pool = earliestOnly ? allRanked.filter(isEarliest) : allRanked;
@@ -30,6 +41,16 @@ export default function DigestView({ state, setEarliestOnly, onAdd, onDraft, onE
             />
             Earliest stage only (Stealth + Pre-seed)
           </label>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+            {lastRefreshed && !refreshing && (
+              <span style={{ fontSize: 11, opacity: 0.5 }}>
+                refreshed {lastRefreshed.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+              </span>
+            )}
+            <button className="btn" onClick={rerun} disabled={refreshing} style={{ minWidth: 120 }}>
+              {refreshing ? '↻ Running…' : '↻ Rerun digest'}
+            </button>
+          </div>
           <button className="btn btn-primary" onClick={onAdd}>+ Add founder</button>
         </div>
       </div>
@@ -52,16 +73,18 @@ export default function DigestView({ state, setEarliestOnly, onAdd, onDraft, onE
         <div className="card"><div className="kpi-sub">Avg. score</div><div className="kpi">{avg}</div></div>
       </div>
 
-      {top.length === 0 ? (
-        <div className="empty">
-          No {earliestOnly ? 'stealth/pre-seed ' : ''}records match.{' '}
-          {earliestOnly ? 'Toggle off "Earliest stage only" or add a founder.' : 'Add a founder.'}
-        </div>
-      ) : (
-        top.map(r => (
-          <FounderCard key={r.id} r={r} showSignal onDraft={onDraft} onEdit={onEdit} />
-        ))
-      )}
+      <div style={{ transition: 'opacity 0.3s', opacity: refreshing ? 0.35 : 1 }}>
+        {top.length === 0 ? (
+          <div className="empty">
+            No {earliestOnly ? 'stealth/pre-seed ' : ''}records match.{' '}
+            {earliestOnly ? 'Toggle off "Earliest stage only" or add a founder.' : 'Add a founder.'}
+          </div>
+        ) : (
+          top.map(r => (
+            <FounderCard key={r.id} r={r} showSignal onDraft={onDraft} onEdit={onEdit} />
+          ))
+        )}
+      </div>
     </div>
   );
 }

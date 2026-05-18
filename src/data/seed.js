@@ -46,18 +46,19 @@ export const SEED = [
 ];
 
 export const SOURCES = [
-  { name:"poach.vc — European Stealth Founders", url:"https://europe.poach.vc/", note:"Highest-signal stealth feed in Europe; twice-weekly, pre-seed bias." },
-  { name:"Tech.eu — Stealth coverage", url:"https://tech.eu/?s=stealth", note:"Pan-EU deal data; surfaces stealth-exits before Sifted." },
-  { name:"Italian Founders Fund — portfolio", url:"https://italianfoundersfund.com", note:"Most active IT pre-seed deployer. Follow CEO + partner LinkedIns for portfolio reveals." },
-  { name:"Indico Capital (Lisbon)", url:"https://indicocapital.com/our-companies", note:"Southern European pre-seed: PT, ES, IT, diaspora. Track portfolio drops." },
-  { name:"DeepMind alumni tracker", url:"https://tech.eu/2026/05/01/over/", note:"112 alumni have founded or plan to launch in last 18mo. Cross-ref with LinkedIn." },
-  { name:"EU-Startups — weekly roundup", url:"https://www.eu-startups.com/category/funding/", note:"Broad EU coverage; best for SoEU + DACH pre-seed/seed." },
-  { name:"Sifted — Funding", url:"https://sifted.eu/sector/funding", note:"Stronger editorial filter; gets to founders earlier." },
-  { name:"Novobrief", url:"https://novobrief.com/", note:"Spain-focused — Theker, Supersonik etc. surface here first." },
-  { name:"Silicon Republic", url:"https://www.siliconrepublic.com/start-ups", note:"Best for Irish startup signal." },
-  { name:"BetaList — Europe", url:"https://betalist.com/regions/europe", note:"Indie launches; combine with founder-LinkedIn check." },
-  { name:"LinkedIn — 'building something new'", url:"https://www.linkedin.com/search/results/people/?keywords=%22building%20something%20new%22%20stealth&origin=GLOBAL_SEARCH_HEADER", note:"Catches stealth founders before they show up anywhere else. Filter by EU/SoEU geography." },
-  { name:"Maia Ventures (Milan)", url:"https://www.maiaventures.com/", note:"€55M food/agri IT pre-seed deployer." },
+  { name:"LinkedIn — 'building something new'", url:"https://www.linkedin.com/search/results/people/?keywords=%22building+something+new%22&origin=GLOBAL_SEARCH_HEADER", note:"Filter by EU/SoEU geography, founded <3 months. Catches stealth founders before they appear anywhere else.", signal_timing:"pre-product" },
+  { name:"Wellfound (AngelList) — stealth EU", url:"https://wellfound.com/companies?stage=stealth&location=europe", note:"Stealth companies with EU geography filter. Self-reported founder profiles before any press.", signal_timing:"pre-product" },
+  { name:"GitHub trending — EU founders", url:"https://github.com/trending", note:"EU-based founders with new repos showing early traction (stars/forks). Leading technical signal.", signal_timing:"pre-product" },
+  { name:"LinkedIn job posts — first hire", url:"https://www.linkedin.com/jobs/search/?keywords=%22first+engineer%22+OR+%22first+hire%22&location=Europe", note:"Solo founders posting their first engineering hire. Company formation is imminent.", signal_timing:"pre-product" },
+  { name:"Twitter/X — 'quit to build'", url:"https://x.com/search?q=%22just+quit+my+job+to+build%22+OR+%226+months+in%22+europe&f=live", note:"'Just quit my job to build' or '6 months in' posts from EU founders. Raw pre-product signal.", signal_timing:"pre-product" },
+  { name:"Substack / personal blogs", url:"https://substack.com/search/founders%20building", note:"Founders writing about the problem before they have a product. Strong intellectual conviction signal.", signal_timing:"pre-product" },
+  { name:"Hackathon winners — ETH, HackUPC, Junction", url:"https://devpost.com/hackathons?challenge_type=in-person&status=ended", note:"ETH Zurich, HackUPC, Junction Finland, Slush side events. Pre-raise, pre-product talent.", signal_timing:"pre-raise" },
+  { name:"EIC Accelerator awardees", url:"https://eic.ec.europa.eu/eic-funding-opportunities/eic-accelerator_en", note:"Pre-product EU companies funded before raising VC. European Commission validation.", signal_timing:"pre-raise" },
+  { name:"CDTI Neotec grants (Spain)", url:"https://www.cdti.es/ayudas/neotec", note:"Pre-revenue B2B Spanish founders backed by government before any VC.", signal_timing:"pre-raise" },
+  { name:"Startup Portugal / Portugal 2030", url:"https://startupportugal.com/", note:"PT pre-seed pipeline before they raise. Government-backed Portuguese founders.", signal_timing:"pre-raise" },
+  { name:"Antler EU cohorts", url:"https://www.antler.co/location/europe", note:"Madrid, Stockholm, Berlin cohort drops = pre-raise. Technical founders in formation.", signal_timing:"pre-raise" },
+  { name:"Entrepreneur First cohorts", url:"https://www.joinef.com/", note:"Technical co-founder pairs at very early stage. Pre-raise by design.", signal_timing:"pre-raise" },
+  { name:"poach.vc — European stealth", url:"https://europe.poach.vc/", note:"Highest-signal stealth feed in Europe; twice-weekly, pre-seed bias.", signal_timing:"pre-raise" },
 ];
 
 export const DEFAULTS = {
@@ -69,4 +70,5 @@ export const DEFAULTS = {
 
 export const STAGE_FIT = { "Stealth": 1.0, "Pre-seed": 1.0, "Seed": 0.15, "Seed extension": 0.05, "Series A": 0.0 };
 export const SIGNAL_WEIGHT = { "Stealth exit": 1.0, "Career move": 0.95, "Launch": 0.85, "Accelerator": 0.7, "Funding": 0.65 };
+export const SIGNAL_TIMING_WEIGHT = { "pre-product": 1.2, "pre-raise": 1.0, "post-raise": 0.6 };
 export const KSTAGES = ["New", "Researching", "Reached out", "Meeting", "Pass"];
