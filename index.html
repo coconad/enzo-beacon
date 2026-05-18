@@ -1,0 +1,1910 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Beacon — Founder Sourcing</title>
+<style>
+:root {
+  color-scheme: light;
+  --bg: #fafaf7;
+  --panel: #ffffff;
+  --ink: #14110f;
+  --ink-2: #4a4641;
+  --ink-3: #8a857d;
+  --line: #e8e3da;
+  --line-2: #f0ece4;
+  --accent: #b8451f;
+  --accent-soft: #fbe9df;
+  --gold: #c79028;
+  --olive: #5a6b3a;
+  --olive-soft: #eef1e3;
+  --sea: #2c5f73;
+  --sea-soft: #e0ecf1;
+  --warn: #9a4a1f;
+  --pass: #8a857d;
+  --shadow: 0 1px 0 rgba(20,17,15,.04), 0 4px 14px rgba(20,17,15,.04);
+  --font: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Helvetica, Arial, sans-serif;
+  --mono: ui-monospace, SFMono-Regular, "JetBrains Mono", Menlo, monospace;
+  --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink); font-family: var(--font); font-size: 14px; line-height: 1.5; }
+a { color: var(--sea); text-decoration: none; }
+a:hover { text-decoration: underline; }
+button { font: inherit; cursor: pointer; }
+
+/* Shell */
+.shell { display: grid; grid-template-columns: 220px 1fr; min-height: 100vh; }
+.side {
+  background: #fbf8f1;
+  border-right: 1px solid var(--line);
+  padding: 20px 14px;
+  position: sticky; top: 0; align-self: start; height: 100vh;
+  overflow-y: auto;
+}
+.brand { display: flex; align-items: center; gap: 10px; padding: 4px 8px 18px; }
+.brand-mark {
+  width: 28px; height: 28px; border-radius: 8px;
+  background: radial-gradient(circle at 30% 30%, #f3c969, var(--accent) 70%);
+  box-shadow: inset 0 0 0 1px rgba(20,17,15,.08);
+}
+.brand-name { font-family: var(--serif); font-size: 19px; letter-spacing: .2px; }
+.brand-tag { font-size: 11px; color: var(--ink-3); margin-top: -2px; }
+.nav { display: flex; flex-direction: column; gap: 2px; }
+.nav button {
+  text-align: left; background: transparent; border: 0;
+  padding: 8px 10px; border-radius: 7px; color: var(--ink-2);
+  display: flex; align-items: center; gap: 9px; font-size: 13.5px;
+}
+.nav button:hover { background: #f3ede0; color: var(--ink); }
+.nav button.active { background: var(--accent-soft); color: var(--accent); font-weight: 600; }
+.nav .dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; opacity: .55; }
+.side-foot { margin-top: 22px; padding-top: 14px; border-top: 1px solid var(--line); font-size: 11.5px; color: var(--ink-3); }
+.side-foot b { color: var(--ink-2); }
+
+/* Main */
+.main { padding: 22px 28px 80px; max-width: 1320px; }
+.page-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; margin-bottom: 18px; }
+.page-title { font-family: var(--serif); font-size: 26px; margin: 0; letter-spacing: .2px; }
+.page-sub { color: var(--ink-3); font-size: 13px; margin-top: 2px; }
+.toolbar { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.btn {
+  background: var(--panel); border: 1px solid var(--line); border-radius: 8px;
+  padding: 7px 12px; color: var(--ink); font-size: 13px;
+}
+.btn:hover { border-color: #d6cfc1; }
+.btn-primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+.btn-primary:hover { background: #a23d1a; border-color: #a23d1a; }
+.btn-ghost { background: transparent; border-color: transparent; color: var(--ink-2); }
+.btn-ghost:hover { background: #f3ede0; }
+.input, .select, textarea {
+  background: var(--panel); border: 1px solid var(--line); border-radius: 8px;
+  padding: 7px 10px; font: inherit; color: var(--ink);
+}
+.input:focus, .select:focus, textarea:focus { outline: 2px solid var(--accent-soft); border-color: var(--accent); }
+
+/* Cards */
+.grid { display: grid; gap: 14px; }
+.cols-3 { grid-template-columns: repeat(3, minmax(0,1fr)); }
+.cols-4 { grid-template-columns: repeat(4, minmax(0,1fr)); }
+@media (max-width: 1100px) { .cols-4 { grid-template-columns: repeat(2, 1fr); } .cols-3 { grid-template-columns: 1fr; } }
+.card {
+  background: var(--panel); border: 1px solid var(--line); border-radius: 12px;
+  padding: 14px 16px; box-shadow: var(--shadow);
+}
+.card h3 { margin: 0 0 6px; font-size: 14.5px; }
+.kpi { font-family: var(--serif); font-size: 26px; line-height: 1; margin-top: 4px; }
+.kpi-sub { color: var(--ink-3); font-size: 12px; margin-top: 4px; }
+
+/* Pills */
+.pill {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 2px 8px; border-radius: 999px; font-size: 11.5px;
+  background: var(--line-2); color: var(--ink-2); border: 1px solid transparent;
+}
+.pill.gold { background: #fbf1d8; color: #7a5611; }
+.pill.olive { background: var(--olive-soft); color: var(--olive); }
+.pill.sea { background: var(--sea-soft); color: var(--sea); }
+.pill.accent { background: var(--accent-soft); color: var(--accent); }
+.pill.muted { color: var(--ink-3); }
+.pill.dot::before { content:""; width: 5px; height: 5px; border-radius: 50%; background: currentColor; display: inline-block; }
+
+/* Founder card */
+.founder {
+  display: grid; grid-template-columns: 1fr auto; gap: 6px 12px;
+  padding: 12px 14px; border: 1px solid var(--line); border-radius: 10px;
+  background: var(--panel); box-shadow: var(--shadow); margin-bottom: 10px;
+}
+.founder:hover { border-color: #d6cfc1; }
+.founder-head { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+.founder-name { font-weight: 600; font-size: 14.5px; }
+.founder-co { color: var(--ink-2); }
+.founder-meta { color: var(--ink-3); font-size: 12.5px; }
+.founder-signal { grid-column: 1/-1; color: var(--ink-2); font-size: 13px; margin-top: 4px; }
+.founder-pills { display: flex; gap: 5px; flex-wrap: wrap; margin-top: 6px; }
+.founder-side { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; min-width: 120px; }
+.score-bar { width: 110px; height: 6px; background: var(--line-2); border-radius: 999px; overflow: hidden; }
+.score-fill { height: 100%; background: linear-gradient(90deg, var(--gold), var(--accent)); }
+.score-label { font-family: var(--mono); font-size: 11px; color: var(--ink-3); }
+.founder-actions { display: flex; gap: 6px; flex-wrap: wrap; }
+.founder-actions button { font-size: 11.5px; padding: 4px 9px; border-radius: 6px; border: 1px solid var(--line); background: var(--panel); color: var(--ink-2); }
+.founder-actions button:hover { border-color: #d6cfc1; color: var(--ink); }
+.founder-actions .src { color: var(--sea); border-color: var(--sea-soft); background: var(--sea-soft); }
+
+/* Inbox table */
+.inbox-bar { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
+.inbox-bar .input { min-width: 240px; }
+.inbox-table {
+  width: 100%; background: var(--panel); border: 1px solid var(--line); border-radius: 12px;
+  border-collapse: separate; border-spacing: 0; overflow: hidden; box-shadow: var(--shadow);
+}
+.inbox-table th, .inbox-table td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line-2); font-size: 13px; }
+.inbox-table th { background: #fbf8f1; color: var(--ink-2); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: .04em; cursor: pointer; }
+.inbox-table tr:last-child td { border-bottom: 0; }
+.inbox-table tr:hover td { background: #fbf8f1; }
+.inbox-table td.score { font-family: var(--mono); font-size: 12.5px; color: var(--ink-2); }
+.inbox-table .row-actions { white-space: nowrap; }
+
+/* Kanban */
+.kanban { display: grid; grid-template-columns: repeat(5, minmax(220px,1fr)); gap: 12px; overflow-x: auto; }
+.kcol { background: #fbf8f1; border: 1px solid var(--line); border-radius: 12px; padding: 10px 10px 12px; min-height: 320px; }
+.kcol-head { display: flex; align-items: center; justify-content: space-between; padding: 4px 4px 8px; }
+.kcol-name { font-weight: 600; font-size: 13px; }
+.kcol-count { color: var(--ink-3); font-size: 12px; }
+.kcard {
+  background: var(--panel); border: 1px solid var(--line); border-radius: 9px;
+  padding: 9px 11px; margin-bottom: 8px; box-shadow: var(--shadow); cursor: grab;
+}
+.kcard:active { cursor: grabbing; }
+.kcard.dragging { opacity: .4; }
+.kcard h4 { margin: 0 0 2px; font-size: 13px; }
+.kcard .ksub { color: var(--ink-3); font-size: 12px; }
+.kcard .kpills { margin-top: 6px; display: flex; gap: 4px; flex-wrap: wrap; }
+.kcol.drag-over { background: var(--accent-soft); border-color: var(--accent); }
+
+/* Outreach */
+.outreach-grid { display: grid; grid-template-columns: 320px 1fr; gap: 14px; }
+@media (max-width: 1000px) { .outreach-grid { grid-template-columns: 1fr; } }
+.target-list { display: flex; flex-direction: column; gap: 6px; max-height: 70vh; overflow-y: auto; }
+.target-item { background: var(--panel); border: 1px solid var(--line); border-radius: 9px; padding: 10px 12px; cursor: pointer; }
+.target-item.selected { border-color: var(--accent); background: var(--accent-soft); }
+.target-item h4 { margin: 0 0 2px; font-size: 13.5px; }
+.target-item .ksub { color: var(--ink-3); font-size: 12px; }
+.draft-area textarea {
+  width: 100%; min-height: 320px; font-family: var(--font); font-size: 13.5px; line-height: 1.6;
+  padding: 14px 16px; border-radius: 10px;
+}
+.draft-meta { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin: 10px 0; color: var(--ink-3); font-size: 12.5px; }
+.tone-toggle { display: inline-flex; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+.tone-toggle button { background: var(--panel); border: 0; padding: 5px 10px; font-size: 12px; color: var(--ink-2); border-right: 1px solid var(--line); }
+.tone-toggle button:last-child { border-right: 0; }
+.tone-toggle button.active { background: var(--accent-soft); color: var(--accent); }
+
+/* Settings */
+.settings { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+@media (max-width: 900px) { .settings { grid-template-columns: 1fr; } }
+.weight-row { display: grid; grid-template-columns: 160px 1fr 50px; align-items: center; gap: 10px; margin: 10px 0; }
+.weight-row input[type=range] { width: 100%; }
+.weight-row .val { font-family: var(--mono); font-size: 12px; color: var(--ink-2); text-align: right; }
+
+/* Empty / toast */
+.empty { color: var(--ink-3); padding: 28px; text-align: center; }
+.toast {
+  position: fixed; right: 18px; bottom: 18px; background: var(--ink); color: #fff;
+  padding: 10px 14px; border-radius: 9px; font-size: 13px;
+  opacity: 0; pointer-events: none; transition: opacity .2s ease; box-shadow: 0 10px 26px rgba(0,0,0,.18);
+}
+.toast.show { opacity: 1; }
+
+/* Tabs visibility */
+.view { display: none; }
+.view.active { display: block; }
+
+/* Hero */
+.hero {
+  display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 16px;
+  background: linear-gradient(135deg, #fbf1d8 0%, #fbe9df 100%);
+  border: 1px solid #efe2c4; border-radius: 14px; padding: 18px 20px; margin-bottom: 18px;
+}
+.hero h2 { margin: 0; font-family: var(--serif); font-size: 22px; }
+.hero p { margin: 4px 0 0; color: var(--ink-2); }
+.hero .stat { font-family: var(--serif); font-size: 30px; line-height: 1; }
+.hero .stat-label { font-size: 12px; color: var(--ink-3); text-transform: uppercase; letter-spacing: .06em; }
+
+/* Detail modal */
+.modal-bg { display: none; position: fixed; inset: 0; background: rgba(20,17,15,.42); align-items: center; justify-content: center; z-index: 50; }
+.modal-bg.show { display: flex; }
+.modal {
+  background: var(--panel); border-radius: 14px; width: min(640px, 92vw); max-height: 88vh; overflow-y: auto;
+  padding: 22px 24px; box-shadow: 0 24px 60px rgba(0,0,0,.18);
+}
+.modal h3 { margin: 0 0 4px; font-family: var(--serif); font-size: 22px; }
+.modal .mclose { float: right; background: transparent; border: 0; font-size: 18px; color: var(--ink-3); cursor: pointer; }
+.modal .field { margin-top: 10px; }
+.modal label { display: block; font-size: 11.5px; color: var(--ink-3); text-transform: uppercase; letter-spacing: .04em; margin-bottom: 4px; }
+.modal .row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.modal textarea { width: 100%; min-height: 80px; }
+.modal .input { width: 100%; }
+</style>
+</head>
+<body>
+
+<div class="shell">
+  <aside class="side">
+    <div class="brand">
+      <div class="brand-mark"></div>
+      <div>
+        <div class="brand-name">Beacon</div>
+        <div class="brand-tag">stealth · pre-seed · SoEU</div>
+      </div>
+    </div>
+    <nav class="nav" id="nav">
+      <button class="active" data-view="digest"><span class="dot"></span>Daily digest</button>
+      <button data-view="inbox"><span class="dot"></span>Inbox</button>
+      <button data-view="kanban"><span class="dot"></span>Deal flow</button>
+      <button data-view="outreach"><span class="dot"></span>Outreach drafts</button>
+      <button data-view="settings"><span class="dot"></span>Settings</button>
+    </nav>
+    <div class="side-foot">
+      <b>Beacon</b> aggregates public signals into a private deal-flow workspace. Bias: <b>stealth + pre-seed</b> only, <b>EU/UK/IE</b> with a <b>Southern European</b> lens.<br><br>
+      All edits stored locally on this device.
+    </div>
+  </aside>
+
+  <main class="main">
+
+    <!-- DIGEST -->
+    <section class="view active" id="view-digest">
+      <div class="page-head">
+        <div>
+          <h1 class="page-title">Daily digest</h1>
+          <div class="page-sub" id="digest-date"></div>
+        </div>
+        <div class="toolbar">
+          <label class="pill accent dot" style="cursor:pointer; padding:6px 12px; font-size:12.5px">
+            <input type="checkbox" id="earliest-toggle" style="vertical-align:middle; margin-right:6px"/>
+            Earliest stage only (Stealth + Pre-seed)
+          </label>
+          <button class="btn" id="btn-refresh-digest">Recompute scores</button>
+          <button class="btn" id="btn-slack-send">Send to Slack</button>
+          <button class="btn btn-primary" id="btn-add-1">+ Add founder</button>
+        </div>
+      </div>
+
+      <div class="hero">
+        <div>
+          <h2>Top signals worth your attention today</h2>
+          <p id="digest-summary">Pre-seed-only bias. Ranked by freshness × stage fit × Southern European angle × signal strength. Pull up an entry to draft outreach in seconds.</p>
+        </div>
+        <div style="text-align:right">
+          <div class="stat-label">tracking</div>
+          <div class="stat" id="digest-count">—</div>
+        </div>
+      </div>
+
+      <div class="grid cols-4" style="margin-bottom:18px">
+        <div class="card"><div class="kpi-sub">Fresh this week</div><div class="kpi" id="kpi-fresh">—</div></div>
+        <div class="card"><div class="kpi-sub">Southern Europe</div><div class="kpi" id="kpi-soeu">—</div></div>
+        <div class="card"><div class="kpi-sub">Pre-seed / stealth</div><div class="kpi" id="kpi-preseed">—</div></div>
+        <div class="card"><div class="kpi-sub">Avg. score</div><div class="kpi" id="kpi-avg">—</div></div>
+      </div>
+
+      <div id="digest-list"></div>
+    </section>
+
+    <!-- INBOX -->
+    <section class="view" id="view-inbox">
+      <div class="page-head">
+        <div>
+          <h1 class="page-title">Inbox</h1>
+          <div class="page-sub">Searchable record of every founder signal Beacon is tracking.</div>
+        </div>
+        <div class="toolbar">
+          <button class="btn btn-primary" id="btn-add-2">+ Add founder</button>
+        </div>
+      </div>
+      <div class="inbox-bar">
+        <input class="input" id="ix-search" placeholder="Search founder, company, sector, city, keywords…" />
+        <select class="select" id="ix-stage">
+          <option value="">All stages</option>
+          <option>Stealth</option><option>Pre-seed</option><option>Seed</option><option>Seed extension</option><option>Series A</option>
+        </select>
+        <select class="select" id="ix-signal">
+          <option value="">All signals</option>
+          <option>Funding</option><option>Launch</option><option>Career move</option><option>Stealth exit</option><option>Accelerator</option>
+        </select>
+        <select class="select" id="ix-soeu">
+          <option value="">All geographies</option>
+          <option value="true">Southern European angle only</option>
+          <option value="false">No SoEU angle</option>
+        </select>
+        <button class="btn btn-ghost" id="btn-reset-filters">Reset</button>
+      </div>
+      <div id="inbox-wrap"></div>
+    </section>
+
+    <!-- KANBAN -->
+    <section class="view" id="view-kanban">
+      <div class="page-head">
+        <div>
+          <h1 class="page-title">Deal flow</h1>
+          <div class="page-sub">Drag founders across stages as you progress conversations.</div>
+        </div>
+        <div class="toolbar">
+          <button class="btn" id="btn-kanban-export">Copy summary</button>
+        </div>
+      </div>
+      <div class="kanban" id="kanban"></div>
+    </section>
+
+    <!-- OUTREACH -->
+    <section class="view" id="view-outreach">
+      <div class="page-head">
+        <div>
+          <h1 class="page-title">Outreach drafts</h1>
+          <div class="page-sub">Pick a founder, generate a personalised cold note. Drafts are templates — review before sending.</div>
+        </div>
+      </div>
+      <div class="outreach-grid">
+        <div>
+          <input class="input" id="or-search" placeholder="Find a founder…" style="width:100%;margin-bottom:8px"/>
+          <div class="target-list" id="or-list"></div>
+        </div>
+        <div class="draft-area">
+          <div class="draft-meta">
+            <div>Tone</div>
+            <div class="tone-toggle" id="tone-toggle">
+              <button class="active" data-tone="warm">Warm intro</button>
+              <button data-tone="punchy">Punchy</button>
+              <button data-tone="thoughtful">Thoughtful angle</button>
+              <button data-tone="italian">Italian (IT)</button>
+              <button data-tone="spanish">Spanish (ES)</button>
+            </div>
+            <div style="margin-left:auto">
+              <button class="btn" id="btn-regen">Regenerate</button>
+              <button class="btn btn-primary" id="btn-copy">Copy draft</button>
+            </div>
+          </div>
+          <div id="or-subject" style="font-weight:600; margin-bottom:6px"></div>
+          <textarea id="or-draft" placeholder="Select a founder on the left to generate a draft."></textarea>
+          <div class="page-sub" style="margin-top:8px">Draft is generated locally from the signal + your angle. Always personalise the first line with something only you would notice.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SETTINGS -->
+    <section class="view" id="view-settings">
+      <div class="page-head">
+        <div>
+          <h1 class="page-title">Settings</h1>
+          <div class="page-sub">Tune the ranking, wire alerts, manage data.</div>
+        </div>
+      </div>
+      <div class="settings">
+        <div class="card">
+          <h3>Ranking weights</h3>
+          <div class="page-sub" style="margin-bottom:10px">Score = (freshness × w<sub>f</sub>) + (stage fit × w<sub>s</sub>) + (SoEU angle × w<sub>g</sub>) + (signal strength × w<sub>q</sub>)</div>
+          <div class="weight-row"><div>Freshness</div><input type="range" min="0" max="100" id="w-fresh"/><div class="val" id="wv-fresh"></div></div>
+          <div class="weight-row"><div>Stage fit (pre-seed/seed)</div><input type="range" min="0" max="100" id="w-stage"/><div class="val" id="wv-stage"></div></div>
+          <div class="weight-row"><div>Southern Europe angle</div><input type="range" min="0" max="100" id="w-soeu"/><div class="val" id="wv-soeu"></div></div>
+          <div class="weight-row"><div>Signal strength</div><input type="range" min="0" max="100" id="w-signal"/><div class="val" id="wv-signal"></div></div>
+          <button class="btn" id="btn-reset-weights" style="margin-top:8px">Reset to defaults</button>
+        </div>
+        <div class="card">
+          <h3>Slack alerts</h3>
+          <div class="page-sub" style="margin-bottom:8px">Paste an incoming-webhook URL from a private Slack channel. Beacon will post the top-N digest there.</div>
+          <input class="input" id="slack-webhook" placeholder="https://hooks.slack.com/services/…" style="width:100%; margin-bottom:8px"/>
+          <div class="weight-row"><div>Digest size</div><input type="range" min="3" max="20" id="digest-size"/><div class="val" id="wv-digest"></div></div>
+          <button class="btn" id="btn-slack-test">Send test ping</button>
+          <button class="btn" id="btn-slack-send-2">Send digest now</button>
+          <div class="page-sub" style="margin-top:8px">If your browser blocks direct Slack POSTs, copy the digest below and paste in Slack.</div>
+          <textarea id="slack-preview" style="width:100%; min-height:140px; margin-top:8px; font-family:var(--mono); font-size:12px"></textarea>
+        </div>
+        <div class="card" style="grid-column:1/-1">
+          <h3>Signal sources Beacon is monitoring</h3>
+          <div class="page-sub" style="margin-bottom:8px">Open these in the morning to scan for new entries. Drop the URL into "Add founder" with notes and Beacon scores it automatically.</div>
+          <div id="sources-list" class="grid cols-3"></div>
+        </div>
+        <div class="card" style="grid-column:1/-1">
+          <h3>Data</h3>
+          <div class="page-sub" style="margin-bottom:8px">Beacon stores everything in your browser's local storage. Export to back up; import to restore on another machine.</div>
+          <button class="btn" id="btn-export">Export JSON</button>
+          <button class="btn" id="btn-import">Import JSON…</button>
+          <button class="btn" id="btn-reset-data" style="color:var(--warn)">Reset to seed dataset</button>
+          <input type="file" id="import-file" accept="application/json" style="display:none"/>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- Add / edit modal -->
+<div class="modal-bg" id="modal">
+  <div class="modal">
+    <button class="mclose" onclick="closeModal()">×</button>
+    <h3 id="m-title">Add founder</h3>
+    <div class="page-sub" id="m-sub">Paste what you found from a public source.</div>
+    <div class="field"><label>Founder name(s)</label><input class="input" id="m-founder"/></div>
+    <div class="row">
+      <div class="field"><label>Company</label><input class="input" id="m-company"/></div>
+      <div class="field"><label>HQ city</label><input class="input" id="m-hq" placeholder="Milan, London, Lisbon…"/></div>
+    </div>
+    <div class="row">
+      <div class="field"><label>Sector</label><input class="input" id="m-sector" placeholder="AI / B2B SaaS / Fintech…"/></div>
+      <div class="field"><label>Stage</label>
+        <select class="select input" id="m-stage">
+          <option>Stealth</option><option>Pre-seed</option><option>Seed</option><option>Seed extension</option><option>Series A</option>
+        </select>
+      </div>
+    </div>
+    <div class="row">
+      <div class="field"><label>Signal type</label>
+        <select class="select input" id="m-signal">
+          <option>Funding</option><option>Launch</option><option>Career move</option><option>Stealth exit</option><option>Accelerator</option>
+        </select>
+      </div>
+      <div class="field"><label>Signal date</label><input class="input" id="m-date" type="date"/></div>
+    </div>
+    <div class="field"><label>One-line signal summary</label><input class="input" id="m-summary" placeholder="Raised €4.2M seed led by a16z to build a multilingual AI agent…"/></div>
+    <div class="row">
+      <div class="field"><label>Founder origin</label><input class="input" id="m-origin" placeholder="Italian, Spanish, Greek, …"/></div>
+      <div class="field"><label>SoEU angle?</label>
+        <select class="select input" id="m-soeu"><option value="false">No</option><option value="true">Yes</option></select>
+      </div>
+    </div>
+    <div class="row">
+      <div class="field"><label>Source URL</label><input class="input" id="m-source" placeholder="https://…"/></div>
+      <div class="field"><label>Source name</label><input class="input" id="m-source-name" placeholder="Sifted, EU-Startups…"/></div>
+    </div>
+    <div class="row">
+      <div class="field"><label>LinkedIn (founder)</label><input class="input" id="m-linkedin" placeholder="https://linkedin.com/in/…"/></div>
+      <div class="field"><label>Website (company)</label><input class="input" id="m-website" placeholder="https://…"/></div>
+    </div>
+    <div class="field"><label>Notes</label><textarea id="m-notes" placeholder="Why interesting, who knows them, what to ask…"></textarea></div>
+    <div style="text-align:right; margin-top:14px">
+      <button class="btn" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-primary" id="m-save">Save</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast">Saved</div>
+
+<script>
+// ---------------------------------------------------------------
+// Beacon — single-file founder sourcing workspace
+// ---------------------------------------------------------------
+
+const STORE_KEY = "beacon.v1";
+const TODAY = new Date("2026-05-18"); // anchor for freshness; client clock can drift
+
+// ---- Seed dataset (curated from real April-May 2026 public signals) ----
+const SEED = [
+  {
+    id: "f01",
+    founder: "Antonino Caccamo",
+    company: "A-Cube",
+    hq: "Milan, IT",
+    sector: "RegTech / E-invoicing",
+    stage: "Seed",
+    signalType: "Funding",
+    signalDate: "2026-05-12",
+    summary: "Raised €4M to expand real-time tax reporting and e-invoicing infra across Europe — riding Italy's April 2026 digital-payment mandate.",
+    origin: "Italian",
+    soeu: true,
+    source: "EU-Startups",
+    sourceUrl: "https://www.eu-startups.com/2026/05/a-cube-lands-e4-million-to-support-e-invoicing-and-real-time-tax-reporting-expansion-from-italy/",
+    linkedin: "",
+    website: "https://acubeapi.com",
+    status: "New",
+    notes: ""
+  },
+  {
+    id: "f02",
+    founder: "Daniel Carmona",
+    company: "Supersonik",
+    hq: "Barcelona, ES",
+    sector: "AI / Sales agents",
+    stage: "Seed",
+    signalType: "Stealth exit",
+    signalDate: "2026-04-22",
+    summary: "Out of stealth with €4.2M led by a16z. Autonomous multilingual AI agent that joins live video calls and runs adaptive software demos.",
+    origin: "Spanish",
+    soeu: true,
+    source: "EU-Startups",
+    sourceUrl: "https://www.eu-startups.com/2025/09/spanish-startup-supersonik-launches-from-stealth-and-raises-e4-2-million-for-its-multilingual-ai-agent/",
+    linkedin: "",
+    website: "https://supersonik.ai",
+    status: "New",
+    notes: "a16z-backed in Barcelona — high SoEU signal value."
+  },
+  {
+    id: "f03",
+    founder: "Jiaqiang Ye Zhu, Carla Gómez Cano",
+    company: "Theker",
+    hq: "Barcelona, ES",
+    sector: "Robotics / Embodied AI",
+    stage: "Seed",
+    signalType: "Funding",
+    signalDate: "2026-04-08",
+    summary: "Spain's largest-ever seed (€18M) for adaptive AI-powered robotic arms. Engineer founders, deep-tech moat.",
+    origin: "Spanish",
+    soeu: true,
+    source: "Novobrief",
+    sourceUrl: "https://novobrief.com/barcelonas-theker-raised-spains-largest-ever-seed-round-to-build-adaptive-ai-powered-robots/11528/",
+    linkedin: "",
+    website: "https://theker.ai",
+    status: "Researching",
+    notes: "Probably too large already, but worth a warm intro for follow-on tracking."
+  },
+  {
+    id: "f04",
+    founder: "Fresh People team",
+    company: "Fresh People / Booster",
+    hq: "Valencia, ES",
+    sector: "HR Tech / AI",
+    stage: "Seed",
+    signalType: "Funding",
+    signalDate: "2026-05-06",
+    summary: "€2.6M to scale Booster, an AI leadership copilot for managers. Valencia-based — rare SoEU HR-tech signal.",
+    origin: "Spanish",
+    soeu: true,
+    source: "EU-Startups",
+    sourceUrl: "https://www.eu-startups.com/2026/05/valencia-based-fresh-people-raises-e2-6-million-to-scale-booster-its-ai-leadership-copilot/",
+    linkedin: "",
+    website: "https://freshpeople.com",
+    status: "New",
+    notes: ""
+  },
+  {
+    id: "f05",
+    founder: "Webidoo team",
+    company: "Webidoo",
+    hq: "Milan, IT",
+    sector: "SMB SaaS / AI automation",
+    stage: "Series A",
+    signalType: "Funding",
+    signalDate: "2026-05-04",
+    summary: "€21M to scale SMB-focused automation across marketing, sales, ops. Italian growth-stage standout.",
+    origin: "Italian",
+    soeu: true,
+    source: "EU-Startups",
+    sourceUrl: "https://www.eu-startups.com/2026/05/italian-ai-company-webidoo-secures-e21-million-to-scale-smb-focused-automation-platform/",
+    linkedin: "",
+    website: "https://webidoo.com",
+    status: "New",
+    notes: "Past pre-seed window but tracks the Milan AI scene."
+  },
+  {
+    id: "f06",
+    founder: "EIGHT team",
+    company: "EIGHT",
+    hq: "Lisbon, PT",
+    sector: "Consumer / Dating",
+    stage: "Seed",
+    signalType: "Funding",
+    signalDate: "2026-04-29",
+    summary: "Raising €3M seed (~€257K already in) to scale a video-first dating app. Lisbon-based, consumer angle.",
+    origin: "Portuguese",
+    soeu: true,
+    source: "EU-Startups",
+    sourceUrl: "https://www.eu-startups.com/2026/04/portugals-eight-is-raising-a-e3-million-seed-round-to-scale-its-video-first-dating-app-with-over-e256-6k-already-raised/",
+    linkedin: "",
+    website: "",
+    status: "New",
+    notes: ""
+  },
+  {
+    id: "f07",
+    founder: "Evangelos Eleftheriou (co-founder/CTO)",
+    company: "Axelera AI",
+    hq: "Eindhoven, NL",
+    sector: "Semiconductors / Edge AI",
+    stage: "Series A",
+    signalType: "Funding",
+    signalDate: "2026-02-24",
+    summary: "$250M+ round (Innovation Industries, BlackRock) for AI inference chips. Greek-founded diaspora deep-tech.",
+    origin: "Greek",
+    soeu: true,
+    source: "Greek City Times",
+    sourceUrl: "https://greekcitytimes.com/2026/02/27/greek-diaspora-startups-axelera-ai-250m-funding-2026/",
+    linkedin: "",
+    website: "https://axelera.ai",
+    status: "Pass",
+    notes: "Late-stage for our thesis but useful relationship for the diaspora map."
+  },
+  {
+    id: "f08",
+    founder: "Ryan Loughran, David Burke",
+    company: "Audrey AI",
+    hq: "Dublin, IE",
+    sector: "AI / Audit & finance",
+    stage: "Pre-seed",
+    signalType: "Funding",
+    signalDate: "2026-04-15",
+    summary: "$1.8M pre-seed for AI solutions targeting financial auditors. Two-person Dublin technical team.",
+    origin: "Irish",
+    soeu: false,
+    source: "Silicon Republic",
+    sourceUrl: "https://www.siliconrepublic.com/start-ups/audrey-ai-pre-seed-funding-round-auditing-growth-expansion",
+    linkedin: "",
+    website: "https://audrey.ai",
+    status: "Researching",
+    notes: "Right stage and size. Worth a coffee."
+  },
+  {
+    id: "f09",
+    founder: "Octostar team",
+    company: "Octostar",
+    hq: "Dublin, IE",
+    sector: "AI / Defense intel",
+    stage: "Seed extension",
+    signalType: "Funding",
+    signalDate: "2026-04-03",
+    summary: "€6.1M seed extension for a sovereign AI-native intelligence platform. Ireland-based, EU-strategic.",
+    origin: "Irish",
+    soeu: false,
+    source: "EU-Startups",
+    sourceUrl: "https://www.eu-startups.com/2026/04/irelands-octostar-closes-seed-extension-round-at-e6-1-million-for-its-sovereign-ai-native-intelligence-platform/",
+    linkedin: "",
+    website: "https://octostar.ai",
+    status: "New",
+    notes: ""
+  },
+  {
+    id: "f10",
+    founder: "Seapoint team",
+    company: "Seapoint",
+    hq: "London, UK",
+    sector: "Fintech / Founder ops",
+    stage: "Seed",
+    signalType: "Funding",
+    signalDate: "2026-04-21",
+    summary: "€7.5M seed to build a founder finance hub for UK & Ireland startups. Self-service onboarding live.",
+    origin: "British",
+    soeu: false,
+    source: "FinTech Global",
+    sourceUrl: "https://fintech.global/2026/04/21/seapoint-raises-e7-5m-seed-to-build-founder-finance-hub/",
+    linkedin: "",
+    website: "https://seapoint.com",
+    status: "New",
+    notes: ""
+  },
+  {
+    id: "f11",
+    founder: "David Silver",
+    company: "Ineffable Intelligence",
+    hq: "London, UK",
+    sector: "AI / Frontier research",
+    stage: "Seed",
+    signalType: "Funding",
+    signalDate: "2026-04-27",
+    summary: "$1.1B seed (Sequoia, Lightspeed, Nvidia, Google, UK Sovereign AI Fund). Ex-DeepMind, building AI that learns without human data.",
+    origin: "British",
+    soeu: false,
+    source: "TechCrunch",
+    sourceUrl: "https://techcrunch.com/2026/04/27/deepminds-david-silver-just-raised-1-1b-to-build-an-ai-that-learns-without-human-data/",
+    linkedin: "https://www.linkedin.com/in/david-silver-1b8b1620/",
+    website: "",
+    status: "Pass",
+    notes: "Out of reach but track for ecosystem signals — early hires often spin out."
+  },
+  {
+    id: "f12",
+    founder: "Voi co-founder + team",
+    company: "Pit",
+    hq: "Stockholm, SE",
+    sector: "AI-native vertical",
+    stage: "Seed",
+    signalType: "Funding",
+    signalDate: "2026-05-08",
+    summary: "$16M seed led by a16z, Lakestar on board. Ex-Voi founder's second act.",
+    origin: "Swedish",
+    soeu: false,
+    source: "Sifted",
+    sourceUrl: "https://sifted.eu/articles/a16z-leads-16m-seed-in-voi-cofounders-new-ai-startup-pit",
+    linkedin: "",
+    website: "",
+    status: "New",
+    notes: "Track for the founder pedigree alone."
+  },
+  {
+    id: "f13",
+    founder: "Davis founding team",
+    company: "Davis",
+    hq: "Paris, FR",
+    sector: "AI / PropTech",
+    stage: "Pre-seed",
+    signalType: "Funding",
+    signalDate: "2026-05-14",
+    summary: "€4.6M pre-seed (Heartcore, Balderton, EF). AI-native real estate — Gaudi-1 model for automated architectural generation.",
+    origin: "French",
+    soeu: false,
+    source: "EU-Startups",
+    sourceUrl: "https://www.eu-startups.com/2026/05/french-ai-real-estate-startup-davis-raises-e4-6-million-and-unveils-gaudi-1-for-automated-architectural-generation/",
+    linkedin: "",
+    website: "https://davis.ai",
+    status: "Researching",
+    notes: "Heartcore + Balderton signal is strong."
+  },
+  {
+    id: "f14",
+    founder: "Tapaya team",
+    company: "Tapaya",
+    hq: "Prague, CZ",
+    sector: "B2B SaaS",
+    stage: "Pre-seed",
+    signalType: "Funding",
+    signalDate: "2026-05-09",
+    summary: "€1M pre-seed. Eastern-EU SaaS — early signal, worth a fast call.",
+    origin: "Czech",
+    soeu: false,
+    source: "Sifted",
+    sourceUrl: "https://sifted.eu/sector/funding",
+    linkedin: "",
+    website: "",
+    status: "New",
+    notes: ""
+  },
+  {
+    id: "f15",
+    founder: "Yann LeCun",
+    company: "AMI Labs",
+    hq: "Paris, FR",
+    sector: "AI / Foundation models",
+    stage: "Seed",
+    signalType: "Funding",
+    signalDate: "2026-05-02",
+    summary: "$1B seed backed by Nvidia and Temasek. Frontier AI lab.",
+    origin: "French",
+    soeu: false,
+    source: "Sifted",
+    sourceUrl: "https://sifted.eu/articles/yann-lecun-ami-labs-meta-funding-round-nvidia",
+    linkedin: "",
+    website: "",
+    status: "Pass",
+    notes: "Pass — too large; useful market signal."
+  },
+  {
+    id: "f16",
+    founder: "Decameal team",
+    company: "Decameal",
+    hq: "Copenhagen, DK",
+    sector: "FoodTech / Sustainability",
+    stage: "Seed",
+    signalType: "Funding",
+    signalDate: "2026-05-10",
+    summary: "Seed to turn invasive shore crabs into sustainable feed ingredients.",
+    origin: "Danish",
+    soeu: false,
+    source: "EU-Startups",
+    sourceUrl: "https://www.eu-startups.com/2026/05/denmarks-decameal-raises-seed-funding-to-turn-invasive-shore-crabs-into-sustainable-feed-ingredients/",
+    linkedin: "",
+    website: "",
+    status: "New",
+    notes: "Off-thesis but a quirky signal worth keeping an eye on."
+  },
+  {
+    id: "f17",
+    founder: "Elephant Company team",
+    company: "Elephant Company",
+    hq: "Berlin, DE",
+    sector: "AI / Frontline workforce",
+    stage: "Seed",
+    signalType: "Funding",
+    signalDate: "2026-05-05",
+    summary: ">€5M to bring AI-powered training to frontline workers. Berlin team, deskless-worker thesis.",
+    origin: "German",
+    soeu: false,
+    source: "EU-Startups",
+    sourceUrl: "https://www.eu-startups.com/2026/05/berlin-based-elephant-company-raises-over-e5-million-to-bring-ai-powered-training-to-frontline-workers/",
+    linkedin: "",
+    website: "",
+    status: "New",
+    notes: ""
+  },
+  {
+    id: "f18",
+    founder: "Multiverse team",
+    company: "Multiverse",
+    hq: "London, UK",
+    sector: "EdTech / Workforce",
+    stage: "Series A",
+    signalType: "Funding",
+    signalDate: "2026-05-13",
+    summary: "€60M primary round, €1.8B valuation. AI upskilling for the enterprise.",
+    origin: "British",
+    soeu: false,
+    source: "EU-Startups",
+    sourceUrl: "https://www.eu-startups.com/2026/05/uk-edtech-multiverse-lands-e60-million-funding-round-at-e1-8-billion-valuation/",
+    linkedin: "",
+    website: "https://multiverse.io",
+    status: "Pass",
+    notes: "Late stage — ecosystem signal only."
+  },
+  {
+    id: "f19",
+    founder: "Italian Founders Fund LPs",
+    company: "Italian Founders Fund (IFF) portfolio",
+    hq: "Milan, IT",
+    sector: "Multiple — pre-seed/seed",
+    stage: "Pre-seed",
+    signalType: "Accelerator",
+    signalDate: "2026-04-28",
+    summary: "IFF (Lorenzo Franzi + 100 founder LPs, €50M) is the most active deployer of Italian pre-seed. Track their announcements as a near real-time index of new IT founders.",
+    origin: "Italian",
+    soeu: true,
+    source: "EU-Startups",
+    sourceUrl: "https://www.eu-startups.com/investor/italian-founders-fund/",
+    linkedin: "",
+    website: "https://italianfoundersfund.com",
+    status: "Researching",
+    notes: "Add an IFF newsletter row to Settings → Sources."
+  },
+  {
+    id: "f20",
+    founder: "Maia Ventures portfolio (food/agri)",
+    company: "Maia Ventures portfolio",
+    hq: "Milan, IT",
+    sector: "AgriFood",
+    stage: "Pre-seed",
+    signalType: "Accelerator",
+    signalDate: "2026-03-18",
+    summary: "Italian €55M debut fund for early-stage agri/food. Surfaces founders Sifted misses.",
+    origin: "Italian",
+    soeu: true,
+    source: "Sifted",
+    sourceUrl: "https://sifted.eu/articles/serial-entrepreneurs-are-returning-to-italy",
+    linkedin: "",
+    website: "",
+    status: "Researching",
+    notes: "Track Maia portfolio reveals."
+  },
+  {
+    id: "f21",
+    founder: "Step Venture portfolio",
+    company: "Step Venture (Milan)",
+    hq: "Milan, IT",
+    sector: "Multiple",
+    stage: "Pre-seed",
+    signalType: "Accelerator",
+    signalDate: "2026-03-25",
+    summary: "€30M Italian early-stage fund — high signal for new Italian founders.",
+    origin: "Italian",
+    soeu: true,
+    source: "Sifted",
+    sourceUrl: "https://sifted.eu/sector/funding",
+    linkedin: "",
+    website: "",
+    status: "Researching",
+    notes: ""
+  },
+  {
+    id: "f22",
+    founder: "Herbert Ventures (Simon & Luis Huber)",
+    company: "Herbert Ventures portfolio",
+    hq: "Zurich, CH",
+    sector: "Deep Tech",
+    stage: "Pre-seed",
+    signalType: "Accelerator",
+    signalDate: "2026-04-09",
+    summary: "€32.5M Fund I, European deep-tech mandate at pre-seed/seed. Track every portfolio announcement.",
+    origin: "Swiss/EU",
+    soeu: false,
+    source: "EU-Startups",
+    sourceUrl: "https://www.eu-startups.com/2026/04/zurichs-herbert-ventures-launches-e32-5-million-fund-i-to-back-european-founders-at-pre-seed-and-seed/",
+    linkedin: "",
+    website: "https://herbert.vc",
+    status: "Researching",
+    notes: ""
+  },
+  {
+    id: "f23",
+    founder: "DFF Ventures team",
+    company: "DFF Ventures portfolio",
+    hq: "Helsinki, FI",
+    sector: "Pre-seed",
+    stage: "Pre-seed",
+    signalType: "Accelerator",
+    signalDate: "2026-04-02",
+    summary: "€70M Fund III — Nordic + European pre-seed deployer.",
+    origin: "Finnish",
+    soeu: false,
+    source: "EU-Startups",
+    sourceUrl: "https://www.eu-startups.com/2026/04/dff-ventures-e70-million-fund-iii-signals-strong-european-pre-seed-investment-trends-in-2026/",
+    linkedin: "",
+    website: "",
+    status: "Researching",
+    notes: ""
+  },
+  {
+    id: "f24",
+    founder: "Lisbon SoEU enterprise fund (Indico/etc.)",
+    company: "Indico Capital (Lisbon)",
+    hq: "Lisbon, PT",
+    sector: "Enterprise SaaS / AI / DeepTech / OceanTech",
+    stage: "Pre-seed",
+    signalType: "Accelerator",
+    signalDate: "2026-04-30",
+    summary: "Doubling down on Southern European enterprise SaaS, AI, deep-tech, ocean-tech. Surfaces Portugal/Spain/Italy and diaspora founders.",
+    origin: "Portuguese",
+    soeu: true,
+    source: "Seedblink",
+    sourceUrl: "https://seedblink.com/blog/ready-to-invest-european-vcs-with-fresh-funds-raised-in-h2-2025",
+    linkedin: "",
+    website: "",
+    status: "Researching",
+    notes: "Highest signal for our SoEU thesis — pipeline source."
+  },
+  {
+    id: "f25",
+    founder: "Greek impact portfolio (12 cos / €4.5M)",
+    company: "Greek Impact VC portfolio",
+    hq: "Athens, GR",
+    sector: "Impact",
+    stage: "Pre-seed",
+    signalType: "Accelerator",
+    signalDate: "2026-03-20",
+    summary: "12 investments into 9 Greek impact-driven companies totaling €4.5M. Lower-signal but the only systematic Greek pipeline today.",
+    origin: "Greek",
+    soeu: true,
+    source: "OpenVC / Industry",
+    sourceUrl: "https://www.openvc.app/investor-lists/pre-seed-investors",
+    linkedin: "",
+    website: "",
+    status: "New",
+    notes: ""
+  },
+  {
+    id: "f26",
+    founder: "Arāya Sie Fund team",
+    company: "Arāya Sie Fund (women-led)",
+    hq: "London, UK",
+    sector: "Women-led / Multiple",
+    stage: "Pre-seed",
+    signalType: "Accelerator",
+    signalDate: "2026-05-07",
+    summary: "£7.5M first close to back women-led UK startups. Useful counter-signal source.",
+    origin: "British",
+    soeu: false,
+    source: "Mean CEO",
+    sourceUrl: "https://blog.mean.ceo/startup-grants-europe-news-may-2026/",
+    linkedin: "",
+    website: "",
+    status: "New",
+    notes: ""
+  },
+  {
+    id: "f27",
+    founder: "Nscale team",
+    company: "Nscale",
+    hq: "London, UK",
+    sector: "AI Infrastructure",
+    stage: "Series A",
+    signalType: "Funding",
+    signalDate: "2026-05-11",
+    summary: "€670M financing for 115MW Narvik AI data centre expansion. Ecosystem move signal.",
+    origin: "British",
+    soeu: false,
+    source: "EU-Startups",
+    sourceUrl: "https://www.eu-startups.com/2026/05/nscale-extends-funding-momentum-with-e670-million-for-norway-ai-infrastructure-project/",
+    linkedin: "",
+    website: "https://nscale.com",
+    status: "Pass",
+    notes: ""
+  },
+  // ---- Stealth + pre-seed wave (added 2026-05-18) ----
+  {
+    id: "f28",
+    founder: "Angelos Chionis",
+    company: "FormalistAI",
+    hq: "Paris, FR",
+    sector: "AI / Legal",
+    stage: "Stealth",
+    signalType: "Career move",
+    signalDate: "2026-05-01",
+    summary: "Ex-DeepMind consultant building an AI legal platform in Paris. Greek founder, frontier-AI pedigree — earliest possible signal.",
+    origin: "Greek",
+    soeu: true,
+    source: "Tech.eu — DeepMind alumni 18-month data",
+    sourceUrl: "https://tech.eu/2026/05/01/over/",
+    linkedin: "https://www.linkedin.com/search/results/all/?keywords=Angelos%20Chionis%20FormalistAI",
+    website: "",
+    status: "New",
+    notes: "Highest priority: Greek + ex-DeepMind + pre-product. Cold-warm via shared DeepMind/Paris connections."
+  },
+  {
+    id: "f29",
+    founder: "Alexander Taboriskiy",
+    company: "Mentiora",
+    hq: "Zurich, CH",
+    sector: "AI / Foundation platform",
+    stage: "Stealth",
+    signalType: "Career move",
+    signalDate: "2026-05-01",
+    summary: "Ex-DeepMind Gemini software engineering lead, CEO and co-founder of a 'next-gen' AI platform. Stealth, no product yet.",
+    origin: "Swiss/Eastern-EU",
+    soeu: false,
+    source: "Tech.eu — DeepMind alumni 18-month data",
+    sourceUrl: "https://tech.eu/2026/05/01/over/",
+    linkedin: "https://www.linkedin.com/search/results/all/?keywords=Alexander%20Taboriskiy%20Mentiora",
+    website: "",
+    status: "New",
+    notes: "Pre-product. Strong technical founder."
+  },
+  {
+    id: "f30",
+    founder: "Olivier Henaff",
+    company: "Cursive",
+    hq: "London, UK (likely)",
+    sector: "AI / Foundation models",
+    stage: "Stealth",
+    signalType: "Career move",
+    signalDate: "2026-05-01",
+    summary: "Ex-DeepMind scientist co-founding Cursive — AI foundation model startup. Stealth.",
+    origin: "French",
+    soeu: false,
+    source: "Tech.eu — DeepMind alumni 18-month data",
+    sourceUrl: "https://tech.eu/2026/05/01/over/",
+    linkedin: "https://www.linkedin.com/in/olivier-henaff/",
+    website: "",
+    status: "New",
+    notes: "Confirm HQ before reaching out."
+  },
+  {
+    id: "f31",
+    founder: "Edward Hughes",
+    company: "Stealth (Hughes)",
+    hq: "London, UK",
+    sector: "AI / RL research",
+    stage: "Stealth",
+    signalType: "Career move",
+    signalDate: "2026-04-15",
+    summary: "Ex-DeepMind reinforcement-learning researcher — confirmed in a stealth founder role.",
+    origin: "British",
+    soeu: false,
+    source: "Tech.eu — DeepMind alumni 18-month data",
+    sourceUrl: "https://tech.eu/2026/05/01/over/",
+    linkedin: "https://www.linkedin.com/in/edward-hughes-39b5b6a/",
+    website: "",
+    status: "New",
+    notes: "Identify the company before introduction. Watch LinkedIn for 'building something new'."
+  },
+  {
+    id: "f32",
+    founder: "Ann-Kristin Balve",
+    company: "Omnisent",
+    hq: "Munich, DE",
+    sector: "Acoustic AI / Defence",
+    stage: "Pre-seed",
+    signalType: "Stealth exit",
+    signalDate: "2026-04-10",
+    summary: "Ex-DeepMind researcher, $3M pre-seed to build acoustic AI for drone detection. Munich-based, defence-relevant.",
+    origin: "German",
+    soeu: false,
+    source: "Tech.eu — DeepMind alumni 18-month data",
+    sourceUrl: "https://tech.eu/2026/05/01/over/",
+    linkedin: "",
+    website: "",
+    status: "New",
+    notes: "Dual-use / defence tech. Right stage."
+  },
+  {
+    id: "f33",
+    founder: "Benedikt Kisner, Ananias, Eckerlein",
+    company: "conmeet",
+    hq: "Borken, DE",
+    sector: "ConTech / AI workflow",
+    stage: "Pre-seed",
+    signalType: "Stealth exit",
+    signalDate: "2026-02-12",
+    summary: "€1.3M pre-seed exit. Serial founder (Kisner exited netgo group to PE). 2 years self-financed in stealth. AI platform for construction processes.",
+    origin: "German",
+    soeu: false,
+    source: "EU-Startups",
+    sourceUrl: "https://www.eu-startups.com/2026/02/german-ai-contech-startup-conmeet-secures-e1-3-million-pre-seed-as-it-exits-stealth-mode/",
+    linkedin: "",
+    website: "https://conmeet.ai",
+    status: "New",
+    notes: "Serial founder pedigree. Pre-seed size is right."
+  },
+  {
+    id: "f34",
+    founder: "Stilla team",
+    company: "Stilla",
+    hq: "Stockholm, SE",
+    sector: "AI / Product team tooling",
+    stage: "Pre-seed",
+    signalType: "Stealth exit",
+    signalDate: "2026-01-20",
+    summary: "$5M pre-seed exit. Intelligence layer for human-AI collaboration in product teams. Stockholm-based.",
+    origin: "Swedish",
+    soeu: false,
+    source: "Tech.eu",
+    sourceUrl: "https://tech.eu/2026/01/20/stilla-emerges-from-stealth-with-5m-to-address-collaboration-challenges-in-ai-driven-companies/",
+    linkedin: "",
+    website: "",
+    status: "New",
+    notes: ""
+  },
+  {
+    id: "f35",
+    founder: "Glaut team",
+    company: "Glaut",
+    hq: "Milan, IT",
+    sector: "AI / Market research",
+    stage: "Pre-seed",
+    signalType: "Accelerator",
+    signalDate: "2026-04-28",
+    summary: "AI-native market research platform. Backed by Italian Founders Fund — earliest IT-pipeline source.",
+    origin: "Italian",
+    soeu: true,
+    source: "Italian Founders Fund portfolio",
+    sourceUrl: "https://www.italianfoundersfund.com/",
+    linkedin: "",
+    website: "https://glaut.com",
+    status: "New",
+    notes: "Italian, pre-seed, AI — bullseye for thesis."
+  },
+  {
+    id: "f36",
+    founder: "Skillvue team",
+    company: "Skillvue",
+    hq: "Milan, IT",
+    sector: "AI / HR / Skills",
+    stage: "Pre-seed",
+    signalType: "Accelerator",
+    signalDate: "2026-04-28",
+    summary: "AI-based skills assessment platform. IFF portfolio.",
+    origin: "Italian",
+    soeu: true,
+    source: "Italian Founders Fund portfolio",
+    sourceUrl: "https://www.italianfoundersfund.com/",
+    linkedin: "",
+    website: "https://skillvue.com",
+    status: "New",
+    notes: ""
+  },
+  {
+    id: "f37",
+    founder: "Complaion team",
+    company: "Complaion",
+    hq: "Milan, IT",
+    sector: "AI / Compliance",
+    stage: "Pre-seed",
+    signalType: "Accelerator",
+    signalDate: "2026-04-28",
+    summary: "AI-first service for SMBs to achieve ISO standards. IFF portfolio.",
+    origin: "Italian",
+    soeu: true,
+    source: "Italian Founders Fund portfolio",
+    sourceUrl: "https://www.italianfoundersfund.com/",
+    linkedin: "",
+    website: "",
+    status: "New",
+    notes: ""
+  },
+  {
+    id: "f38",
+    founder: "Compri team",
+    company: "Compri",
+    hq: "Milan, IT",
+    sector: "Procurement / Manufacturing",
+    stage: "Pre-seed",
+    signalType: "Accelerator",
+    signalDate: "2026-04-28",
+    summary: "Next-gen procurement OS for Italian manufacturing SMEs. IFF portfolio.",
+    origin: "Italian",
+    soeu: true,
+    source: "Italian Founders Fund portfolio",
+    sourceUrl: "https://www.italianfoundersfund.com/",
+    linkedin: "",
+    website: "",
+    status: "New",
+    notes: "Italian industrial SME exposure is a unique angle."
+  },
+  {
+    id: "f39",
+    founder: "Cassandra team",
+    company: "Cassandra",
+    hq: "Milan, IT",
+    sector: "AI / AdTech",
+    stage: "Pre-seed",
+    signalType: "Accelerator",
+    signalDate: "2026-04-28",
+    summary: "AI-driven budget allocator for optimising ad spend. IFF portfolio.",
+    origin: "Italian",
+    soeu: true,
+    source: "Italian Founders Fund portfolio",
+    sourceUrl: "https://www.italianfoundersfund.com/",
+    linkedin: "",
+    website: "",
+    status: "New",
+    notes: ""
+  },
+  {
+    id: "f40",
+    founder: "Sava team",
+    company: "Sava",
+    hq: "Milan, IT",
+    sector: "Biosensing / HealthTech",
+    stage: "Pre-seed",
+    signalType: "Accelerator",
+    signalDate: "2026-04-28",
+    summary: "Advanced biosensing for health monitoring. IFF portfolio.",
+    origin: "Italian",
+    soeu: true,
+    source: "Italian Founders Fund portfolio",
+    sourceUrl: "https://www.italianfoundersfund.com/",
+    linkedin: "",
+    website: "",
+    status: "New",
+    notes: ""
+  },
+  {
+    id: "f41",
+    founder: "Peekz team",
+    company: "Peekz",
+    hq: "Milan, IT",
+    sector: "AI / Career growth",
+    stage: "Pre-seed",
+    signalType: "Accelerator",
+    signalDate: "2026-04-28",
+    summary: "AI-powered companions for personalised career growth. IFF portfolio.",
+    origin: "Italian",
+    soeu: true,
+    source: "Italian Founders Fund portfolio",
+    sourceUrl: "https://www.italianfoundersfund.com/",
+    linkedin: "",
+    website: "",
+    status: "New",
+    notes: ""
+  },
+  {
+    id: "f42",
+    founder: "Salupay team",
+    company: "Salupay",
+    hq: "Milan, IT",
+    sector: "Fintech / HealthTech",
+    stage: "Pre-seed",
+    signalType: "Accelerator",
+    signalDate: "2026-04-28",
+    summary: "Revenue-collection software for healthcare clinics. IFF portfolio.",
+    origin: "Italian",
+    soeu: true,
+    source: "Italian Founders Fund portfolio",
+    sourceUrl: "https://www.italianfoundersfund.com/",
+    linkedin: "",
+    website: "",
+    status: "New",
+    notes: ""
+  },
+  {
+    id: "f43",
+    founder: "Jet HR team",
+    company: "Jet HR",
+    hq: "Milan, IT",
+    sector: "HR Tech / SMB",
+    stage: "Pre-seed",
+    signalType: "Accelerator",
+    signalDate: "2026-04-28",
+    summary: "Digital payroll & HR for Italian SMBs. IFF portfolio.",
+    origin: "Italian",
+    soeu: true,
+    source: "Italian Founders Fund portfolio",
+    sourceUrl: "https://www.italianfoundersfund.com/",
+    linkedin: "",
+    website: "https://jethr.com",
+    status: "New",
+    notes: "Largest IT SMB market — Italian compliance moat."
+  },
+  {
+    id: "f44",
+    founder: "Aquila team",
+    company: "Aquila",
+    hq: "Milan, IT",
+    sector: "IoT / ESG",
+    stage: "Pre-seed",
+    signalType: "Accelerator",
+    signalDate: "2026-04-28",
+    summary: "IoT-powered ESG tracking. IFF portfolio.",
+    origin: "Italian",
+    soeu: true,
+    source: "Italian Founders Fund portfolio",
+    sourceUrl: "https://www.italianfoundersfund.com/",
+    linkedin: "",
+    website: "",
+    status: "New",
+    notes: ""
+  }
+];
+
+const SOURCES = [
+  { name: "poach.vc — European Stealth Founders", url: "https://europe.poach.vc/", note: "Highest-signal stealth feed in Europe; twice-weekly, pre-seed bias." },
+  { name: "Tech.eu — Stealth coverage", url: "https://tech.eu/?s=stealth", note: "Pan-EU deal data; surfaces stealth-exits before Sifted." },
+  { name: "Italian Founders Fund — portfolio", url: "https://italianfoundersfund.com", note: "Most active IT pre-seed deployer. Follow CEO + partner LinkedIns for portfolio reveals." },
+  { name: "Indico Capital (Lisbon)", url: "https://indicocapital.com/our-companies", note: "Southern European pre-seed: PT, ES, IT, diaspora. Track portfolio drops." },
+  { name: "DeepMind alumni tracker", url: "https://tech.eu/2026/05/01/over/", note: "112 alumni have founded or plan to launch in last 18mo. Cross-ref with LinkedIn." },
+  { name: "EU-Startups — weekly roundup", url: "https://www.eu-startups.com/category/funding/", note: "Broad EU coverage; best for SoEU + DACH pre-seed/seed." },
+  { name: "Sifted — Funding", url: "https://sifted.eu/sector/funding", note: "Stronger editorial filter; gets to founders earlier." },
+  { name: "Novobrief", url: "https://novobrief.com/", note: "Spain-focused — Theker, Supersonik etc. surface here first." },
+  { name: "Silicon Republic", url: "https://www.siliconrepublic.com/start-ups", note: "Best for Irish startup signal." },
+  { name: "BetaList — Europe", url: "https://betalist.com/regions/europe", note: "Indie launches; combine with founder-LinkedIn check." },
+  { name: "LinkedIn — 'building something new'", url: "https://www.linkedin.com/search/results/people/?keywords=%22building%20something%20new%22%20stealth&origin=GLOBAL_SEARCH_HEADER", note: "Catches stealth founders before they show up anywhere else. Filter by EU/SoEU geography." },
+  { name: "Maia Ventures (Milan)", url: "https://www.maiaventures.com/", note: "€55M food/agri IT pre-seed deployer." }
+];
+
+const DEFAULTS = {
+  weights: { fresh: 30, stage: 35, soeu: 25, signal: 10 },
+  digestSize: 10,
+  slackWebhook: "",
+  earliestOnly: true
+};
+
+// Pre-seed-only bias: stealth + pre-seed dominate; seed near-zero; later stages effectively excluded.
+const STAGE_FIT = { "Stealth": 1.0, "Pre-seed": 1.0, "Seed": 0.15, "Seed extension": 0.05, "Series A": 0.0 };
+const SIGNAL_WEIGHT = { "Stealth exit": 1.0, "Career move": 0.95, "Launch": 0.85, "Accelerator": 0.7, "Funding": 0.65 };
+
+// ---------- state ----------
+let state = load();
+
+function load() {
+  try {
+    const raw = localStorage.getItem(STORE_KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      if (parsed.earliestOnly === undefined) parsed.earliestOnly = DEFAULTS.earliestOnly;
+      // Merge any seed records the user doesn't have yet (by id) — additive only.
+      const existing = new Set((parsed.records || []).map(r => r.id));
+      const missing = SEED.filter(r => !existing.has(r.id));
+      if (missing.length) parsed.records = (parsed.records || []).concat(missing);
+      return parsed;
+    }
+  } catch (e) {}
+  return { records: SEED.slice(), weights: { ...DEFAULTS.weights }, digestSize: DEFAULTS.digestSize, slackWebhook: DEFAULTS.slackWebhook, earliestOnly: DEFAULTS.earliestOnly };
+}
+function isEarliest(r) { return r.stage === "Stealth" || r.stage === "Pre-seed"; }
+function save() { localStorage.setItem(STORE_KEY, JSON.stringify(state)); }
+
+function fmtDate(d) {
+  const dt = new Date(d);
+  return dt.toLocaleDateString(undefined, { weekday: "long", month: "long", day: "numeric", year: "numeric" });
+}
+function daysSince(d) {
+  const dt = new Date(d);
+  return Math.max(0, Math.round((TODAY - dt) / 86400000));
+}
+function freshness(d) {
+  // 1.0 at 0 days, 0.5 at 14d, ~0.2 at 30d, decays
+  const days = daysSince(d);
+  return Math.exp(-days / 18);
+}
+function scoreFor(r) {
+  const w = state.weights;
+  const f = freshness(r.signalDate);
+  const s = STAGE_FIT[r.stage] ?? 0.5;
+  const g = r.soeu ? 1.0 : 0.35;
+  const q = SIGNAL_WEIGHT[r.signalType] ?? 0.6;
+  return Math.round((f * w.fresh + s * w.stage + g * w.soeu + q * w.signal));
+}
+
+// ---------- nav ----------
+const navBtns = document.querySelectorAll("#nav button");
+navBtns.forEach(b => b.addEventListener("click", () => switchView(b.dataset.view)));
+function switchView(v) {
+  navBtns.forEach(b => b.classList.toggle("active", b.dataset.view === v));
+  document.querySelectorAll(".view").forEach(s => s.classList.toggle("active", s.id === "view-" + v));
+  if (v === "digest") renderDigest();
+  if (v === "inbox") renderInbox();
+  if (v === "kanban") renderKanban();
+  if (v === "outreach") renderOutreach();
+  if (v === "settings") renderSettings();
+}
+
+// ---------- digest ----------
+function renderDigest() {
+  document.getElementById("digest-date").textContent = fmtDate(TODAY);
+  document.getElementById("earliest-toggle").checked = !!state.earliestOnly;
+
+  const allRanked = state.records.map(r => ({ ...r, score: scoreFor(r) })).sort((a,b) => b.score - a.score);
+  const pool = state.earliestOnly ? allRanked.filter(isEarliest) : allRanked;
+
+  document.getElementById("digest-count").textContent = pool.length;
+
+  const fresh = pool.filter(r => daysSince(r.signalDate) <= 7).length;
+  const soeu = pool.filter(r => r.soeu).length;
+  const stealth = pool.filter(r => r.stage === "Stealth").length;
+  const avg = Math.round(pool.reduce((a,r) => a + r.score, 0) / Math.max(1, pool.length));
+  document.getElementById("kpi-fresh").textContent = fresh;
+  document.getElementById("kpi-soeu").textContent = soeu;
+  document.getElementById("kpi-preseed").textContent = stealth;
+  document.getElementById("kpi-avg").textContent = avg || 0;
+  // Relabel KPI to reflect the focus
+  document.getElementById("kpi-preseed").parentElement.firstElementChild.textContent = "In stealth";
+
+  const top = pool.slice(0, state.digestSize);
+  const list = document.getElementById("digest-list");
+  list.innerHTML = "";
+  top.forEach(r => list.appendChild(founderCard(r, true)));
+  if (top.length === 0) {
+    list.innerHTML = `<div class="empty">No ${state.earliestOnly ? "stealth/pre-seed " : ""}records match. ${state.earliestOnly ? 'Toggle off "Earliest stage only" or add a founder.' : "Add a founder."}</div>`;
+  }
+}
+
+document.getElementById("earliest-toggle").addEventListener("change", e => {
+  state.earliestOnly = e.target.checked;
+  save();
+  renderDigest();
+});
+
+function founderCard(r, showSignal) {
+  const wrap = document.createElement("div");
+  wrap.className = "founder";
+  const pct = Math.min(100, r.score);
+  const days = daysSince(r.signalDate);
+  wrap.innerHTML = `
+    <div>
+      <div class="founder-head">
+        <span class="founder-name">${escapeHTML(r.founder)}</span>
+        <span class="founder-co">· ${escapeHTML(r.company)}</span>
+        <span class="founder-meta">— ${escapeHTML(r.hq)}</span>
+      </div>
+      <div class="founder-meta">${escapeHTML(r.sector)} · ${escapeHTML(r.stage)} · ${escapeHTML(r.signalType)} · ${days === 0 ? "today" : days + "d ago"}</div>
+      ${showSignal ? `<div class="founder-signal">${escapeHTML(r.summary)}</div>` : ""}
+      <div class="founder-pills">
+        ${r.soeu ? `<span class="pill accent dot">Southern EU · ${escapeHTML(r.origin)}</span>` : `<span class="pill muted">${escapeHTML(r.origin)}</span>`}
+        <span class="pill ${stageTone(r.stage)}">${escapeHTML(r.stage)}</span>
+        <span class="pill ${signalTone(r.signalType)}">${escapeHTML(r.signalType)}</span>
+        <span class="pill muted">${escapeHTML(r.status)}</span>
+      </div>
+    </div>
+    <div class="founder-side">
+      <div class="score-bar"><div class="score-fill" style="width:${pct}%"></div></div>
+      <div class="score-label">score ${r.score} · fresh ${(freshness(r.signalDate)*100|0)}%</div>
+      <div class="founder-actions">
+        ${r.sourceUrl ? `<a class="src" href="${escapeAttr(r.sourceUrl)}" target="_blank" rel="noopener">${escapeHTML(r.source || "Source")} ↗</a>` : ""}
+        ${r.linkedin ? `<a class="src" href="${escapeAttr(r.linkedin)}" target="_blank" rel="noopener">LinkedIn ↗</a>` : ""}
+        ${r.website ? `<a class="src" href="${escapeAttr(r.website)}" target="_blank" rel="noopener">Site ↗</a>` : ""}
+        <button onclick="draftFor('${r.id}')">Draft outreach</button>
+        <button onclick="editRec('${r.id}')">Edit</button>
+      </div>
+    </div>`;
+  return wrap;
+}
+
+function stageTone(stage) {
+  if (stage === "Pre-seed" || stage === "Stealth") return "olive";
+  if (stage === "Seed" || stage === "Seed extension") return "gold";
+  if (stage === "Series A") return "sea";
+  return "";
+}
+function signalTone(s) {
+  if (s === "Funding") return "gold";
+  if (s === "Stealth exit") return "accent";
+  if (s === "Career move") return "olive";
+  if (s === "Launch") return "sea";
+  return "";
+}
+
+// ---------- inbox ----------
+let ixSort = { col: "score", dir: -1 };
+function renderInbox() {
+  const q = document.getElementById("ix-search").value.toLowerCase().trim();
+  const stage = document.getElementById("ix-stage").value;
+  const signal = document.getElementById("ix-signal").value;
+  const soeu = document.getElementById("ix-soeu").value;
+  const rows = state.records.map(r => ({ ...r, score: scoreFor(r) }))
+    .filter(r => {
+      if (stage && r.stage !== stage) return false;
+      if (signal && r.signalType !== signal) return false;
+      if (soeu === "true" && !r.soeu) return false;
+      if (soeu === "false" && r.soeu) return false;
+      if (!q) return true;
+      const hay = [r.founder, r.company, r.hq, r.sector, r.origin, r.summary, r.notes, r.source].join(" ").toLowerCase();
+      return hay.includes(q);
+    })
+    .sort((a,b) => {
+      const c = ixSort.col;
+      const A = a[c], B = b[c];
+      if (typeof A === "number" && typeof B === "number") return (A - B) * ixSort.dir;
+      return String(A).localeCompare(String(B)) * ixSort.dir;
+    });
+
+  const wrap = document.getElementById("inbox-wrap");
+  if (rows.length === 0) { wrap.innerHTML = '<div class="empty">No matches.</div>'; return; }
+
+  wrap.innerHTML = `
+    <table class="inbox-table">
+      <thead><tr>
+        <th data-sort="score">Score</th>
+        <th data-sort="founder">Founder</th>
+        <th data-sort="company">Company</th>
+        <th data-sort="hq">HQ</th>
+        <th data-sort="stage">Stage</th>
+        <th data-sort="signalType">Signal</th>
+        <th data-sort="signalDate">Date</th>
+        <th data-sort="status">Status</th>
+        <th></th>
+      </tr></thead>
+      <tbody>${rows.map(r => `
+        <tr>
+          <td class="score">${r.score}</td>
+          <td>${escapeHTML(r.founder)}${r.soeu?' <span class="pill accent" style="margin-left:4px">SoEU</span>':''}</td>
+          <td>${escapeHTML(r.company)}<div class="founder-meta">${escapeHTML(r.sector)}</div></td>
+          <td>${escapeHTML(r.hq)}</td>
+          <td><span class="pill ${stageTone(r.stage)}">${escapeHTML(r.stage)}</span></td>
+          <td>${escapeHTML(r.signalType)}</td>
+          <td>${escapeHTML(r.signalDate)}</td>
+          <td>${escapeHTML(r.status)}</td>
+          <td class="row-actions">
+            ${r.sourceUrl ? `<a href="${escapeAttr(r.sourceUrl)}" target="_blank" rel="noopener">↗</a>` : ""}
+            <button class="btn btn-ghost" onclick="editRec('${r.id}')">Edit</button>
+            <button class="btn btn-ghost" onclick="draftFor('${r.id}')">Draft</button>
+          </td>
+        </tr>`).join("")}</tbody>
+    </table>`;
+  wrap.querySelectorAll("th[data-sort]").forEach(th => th.addEventListener("click", () => {
+    const c = th.dataset.sort;
+    ixSort = { col: c, dir: ixSort.col === c ? -ixSort.dir : (c === "score" ? -1 : 1) };
+    renderInbox();
+  }));
+}
+["ix-search","ix-stage","ix-signal","ix-soeu"].forEach(id => document.getElementById(id).addEventListener("input", renderInbox));
+document.getElementById("btn-reset-filters").addEventListener("click", () => {
+  ["ix-search","ix-stage","ix-signal","ix-soeu"].forEach(id => document.getElementById(id).value = "");
+  renderInbox();
+});
+
+// ---------- kanban ----------
+const KSTAGES = ["New", "Researching", "Reached out", "Meeting", "Pass"];
+function renderKanban() {
+  const root = document.getElementById("kanban");
+  root.innerHTML = "";
+  const ranked = state.records.map(r => ({ ...r, score: scoreFor(r) })).sort((a,b) => b.score - a.score);
+  KSTAGES.forEach(st => {
+    const col = document.createElement("div");
+    col.className = "kcol";
+    col.dataset.stage = st;
+    col.innerHTML = `<div class="kcol-head"><div class="kcol-name">${st}</div><div class="kcol-count" data-c></div></div>`;
+    const cards = ranked.filter(r => normaliseStatus(r.status) === st);
+    cards.forEach(r => col.appendChild(kanbanCard(r)));
+    col.querySelector("[data-c]").textContent = cards.length;
+    col.addEventListener("dragover", e => { e.preventDefault(); col.classList.add("drag-over"); });
+    col.addEventListener("dragleave", () => col.classList.remove("drag-over"));
+    col.addEventListener("drop", e => {
+      e.preventDefault();
+      col.classList.remove("drag-over");
+      const id = e.dataTransfer.getData("text/plain");
+      const rec = state.records.find(r => r.id === id);
+      if (rec && normaliseStatus(rec.status) !== st) {
+        rec.status = st;
+        save();
+        renderKanban();
+        toast(`Moved ${rec.company} → ${st}`);
+      }
+    });
+    root.appendChild(col);
+  });
+}
+function normaliseStatus(s) {
+  if (!s) return "New";
+  const m = { "Reached Out": "Reached out", "Active": "Meeting" };
+  return KSTAGES.includes(s) ? s : (m[s] || "New");
+}
+function kanbanCard(r) {
+  const c = document.createElement("div");
+  c.className = "kcard";
+  c.draggable = true;
+  c.innerHTML = `
+    <h4>${escapeHTML(r.company)}</h4>
+    <div class="ksub">${escapeHTML(r.founder)} · ${escapeHTML(r.hq)}</div>
+    <div class="kpills">
+      ${r.soeu ? '<span class="pill accent">SoEU</span>' : ''}
+      <span class="pill ${stageTone(r.stage)}">${escapeHTML(r.stage)}</span>
+      <span class="pill muted">score ${r.score}</span>
+    </div>`;
+  c.addEventListener("dragstart", e => { c.classList.add("dragging"); e.dataTransfer.setData("text/plain", r.id); });
+  c.addEventListener("dragend", () => c.classList.remove("dragging"));
+  c.addEventListener("click", () => editRec(r.id));
+  return c;
+}
+document.getElementById("btn-kanban-export").addEventListener("click", () => {
+  const ranked = state.records.map(r => ({ ...r, score: scoreFor(r) })).sort((a,b) => b.score - a.score);
+  const lines = KSTAGES.map(st => {
+    const items = ranked.filter(r => normaliseStatus(r.status) === st);
+    return `${st} (${items.length})\n` + items.map(r => `  • ${r.company} — ${r.founder} (${r.hq})  score:${r.score}`).join("\n");
+  }).join("\n\n");
+  copyToClipboard(lines);
+});
+
+// ---------- outreach ----------
+let orSelected = null;
+let orTone = "warm";
+function renderOutreach() {
+  const list = document.getElementById("or-list");
+  const q = (document.getElementById("or-search").value || "").toLowerCase();
+  const ranked = state.records.map(r => ({ ...r, score: scoreFor(r) })).sort((a,b) => b.score - a.score);
+  const filt = ranked.filter(r => {
+    if (!q) return true;
+    return (r.founder + r.company + r.sector + r.hq).toLowerCase().includes(q);
+  });
+  list.innerHTML = "";
+  filt.forEach(r => {
+    const el = document.createElement("div");
+    el.className = "target-item" + (orSelected === r.id ? " selected" : "");
+    el.innerHTML = `<h4>${escapeHTML(r.founder)}</h4><div class="ksub">${escapeHTML(r.company)} · ${escapeHTML(r.hq)} · score ${r.score}</div>`;
+    el.addEventListener("click", () => { orSelected = r.id; renderOutreach(); generateDraft(); });
+    list.appendChild(el);
+  });
+  if (!orSelected && filt.length) { orSelected = filt[0].id; }
+  generateDraft();
+}
+document.getElementById("or-search").addEventListener("input", renderOutreach);
+
+document.querySelectorAll("#tone-toggle button").forEach(b => b.addEventListener("click", () => {
+  orTone = b.dataset.tone;
+  document.querySelectorAll("#tone-toggle button").forEach(x => x.classList.toggle("active", x === b));
+  generateDraft();
+}));
+document.getElementById("btn-regen").addEventListener("click", generateDraft);
+document.getElementById("btn-copy").addEventListener("click", () => {
+  const subj = document.getElementById("or-subject").textContent;
+  const body = document.getElementById("or-draft").value;
+  copyToClipboard(`${subj}\n\n${body}`);
+});
+
+function generateDraft() {
+  const r = state.records.find(x => x.id === orSelected);
+  const subj = document.getElementById("or-subject");
+  const ta = document.getElementById("or-draft");
+  if (!r) { subj.textContent = ""; ta.value = ""; return; }
+
+  const angle = r.soeu ? "Southern European founder ecosystem" : "European tech";
+  const firstName = (r.founder.split(/[, &]/)[0] || r.founder).split(" ")[0];
+  const intro = pickIntro(r, orTone, firstName, angle);
+  const why = pickWhy(r, orTone);
+  const ask = pickAsk(r, orTone);
+
+  subj.textContent = `Subject:  ${pickSubject(r, orTone)}`;
+  ta.value = `${intro}\n\n${why}\n\n${ask}\n\nBest,\nNadhi\n\n— Found via ${r.source || "public signal"}: ${r.sourceUrl || ""}`;
+}
+
+function pickSubject(r, tone) {
+  if (tone === "italian") return `Complimenti per ${r.company} — un caffè?`;
+  if (tone === "spanish") return `Enhorabuena por ${r.company} — ¿un café?`;
+  if (tone === "punchy")  return `${r.company} — quick one`;
+  if (tone === "thoughtful") return `A small thought on ${r.company}'s ${r.sector.split("/")[0].trim()} angle`;
+  return `Saw the news on ${r.company} — would love to say hi`;
+}
+
+function pickIntro(r, tone, name, angle) {
+  if (tone === "italian") {
+    return `Ciao ${name},\n\nho letto del round di ${r.company} (${r.summary.split(".")[0]}) — complimenti, signal molto interessante.`;
+  }
+  if (tone === "spanish") {
+    return `Hola ${name},\n\nacabo de ver lo de ${r.company} (${r.summary.split(".")[0]}) — ¡enhorabuena!`;
+  }
+  if (tone === "punchy") {
+    return `${name} — quick note. Saw ${r.company}'s signal today and wanted to reach out before the inbox storm.`;
+  }
+  if (tone === "thoughtful") {
+    return `Hi ${name},\n\nI've been tracking the ${angle} closely and ${r.company}'s ${r.sector.toLowerCase()} approach caught my attention — particularly the ${stageDescriptor(r.stage)} timing.`;
+  }
+  return `Hi ${name},\n\nCongrats on ${r.company} — I came across the ${r.signalType.toLowerCase()} signal and wanted to introduce myself.`;
+}
+
+function pickWhy(r, tone) {
+  const sector = r.sector.toLowerCase();
+  if (tone === "italian") return `Investo (privatamente) a early-stage in EU/UK, con un focus particolare sui fondatori del Sud Europa. ${r.summary}`;
+  if (tone === "spanish") return `Invierto a título personal en early-stage en EU/UK, con foco en fundadores del Sur de Europa. ${r.summary}`;
+  if (tone === "punchy") return `I back early-stage EU/UK founders, with a strong bias toward ${r.soeu ? "Southern European angles" : "technical founders shipping fast"}. ${r.summary.split(".")[0]}.`;
+  if (tone === "thoughtful") return `Most ${sector} bets right now feel undifferentiated. Yours doesn't — the ${r.stage.toLowerCase()} positioning and ${r.hq.split(",")[0]} HQ are exactly where the curve bends. ${r.summary}`;
+  return `I write small early-stage cheques into EU/UK/IE founders${r.soeu ? ", with a Southern European lens" : ""}. ${r.summary}`;
+}
+
+function pickAsk(r, tone) {
+  if (tone === "italian") return `Se ti capita 20 minuti nelle prossime due settimane — anche solo per conoscersi, niente pitch — sarei felicissimo.`;
+  if (tone === "spanish") return `Si tienes 20 minutos libres en las próximas dos semanas — solo para conocernos, sin presentación — me encantaría.`;
+  if (tone === "punchy") return `20 mins next week? I'll keep it short.`;
+  if (tone === "thoughtful") return `No pitch on your end needed — happy to be useful first (warm intros, hiring, customer leads). 20-30 mins if you can spare it?`;
+  return `Would love 20 mins to learn more about what you're building. Happy to share any reflections I have from other ${r.sector.split("/")[0].trim().toLowerCase()} bets I track.`;
+}
+
+function stageDescriptor(s) {
+  if (s === "Pre-seed" || s === "Stealth") return "pre-product";
+  if (s === "Seed") return "post-product, pre-scale";
+  return s.toLowerCase();
+}
+
+// expose for inline handlers
+window.draftFor = function(id) { orSelected = id; orTone = "warm"; switchView("outreach"); };
+
+// ---------- settings ----------
+function renderSettings() {
+  const w = state.weights;
+  document.getElementById("w-fresh").value = w.fresh;
+  document.getElementById("w-stage").value = w.stage;
+  document.getElementById("w-soeu").value = w.soeu;
+  document.getElementById("w-signal").value = w.signal;
+  document.getElementById("wv-fresh").textContent = w.fresh;
+  document.getElementById("wv-stage").textContent = w.stage;
+  document.getElementById("wv-soeu").textContent = w.soeu;
+  document.getElementById("wv-signal").textContent = w.signal;
+
+  document.getElementById("digest-size").value = state.digestSize;
+  document.getElementById("wv-digest").textContent = state.digestSize;
+  document.getElementById("slack-webhook").value = state.slackWebhook || "";
+
+  const wrap = document.getElementById("sources-list");
+  wrap.innerHTML = "";
+  SOURCES.forEach(s => {
+    const c = document.createElement("div");
+    c.className = "card";
+    c.innerHTML = `<h3><a href="${escapeAttr(s.url)}" target="_blank" rel="noopener">${escapeHTML(s.name)} ↗</a></h3><div class="page-sub">${escapeHTML(s.note)}</div>`;
+    wrap.appendChild(c);
+  });
+
+  refreshSlackPreview();
+}
+function bindWeight(id, key) {
+  document.getElementById(id).addEventListener("input", e => {
+    state.weights[key] = +e.target.value;
+    document.getElementById("wv-" + key).textContent = e.target.value;
+    save();
+  });
+}
+bindWeight("w-fresh", "fresh");
+bindWeight("w-stage", "stage");
+bindWeight("w-soeu", "soeu");
+bindWeight("w-signal", "signal");
+document.getElementById("digest-size").addEventListener("input", e => {
+  state.digestSize = +e.target.value;
+  document.getElementById("wv-digest").textContent = e.target.value;
+  save();
+  refreshSlackPreview();
+});
+document.getElementById("slack-webhook").addEventListener("input", e => { state.slackWebhook = e.target.value.trim(); save(); });
+document.getElementById("btn-reset-weights").addEventListener("click", () => {
+  state.weights = { ...DEFAULTS.weights };
+  save(); renderSettings(); toast("Weights reset");
+});
+document.getElementById("btn-export").addEventListener("click", () => {
+  const blob = new Blob([JSON.stringify(state, null, 2)], { type: "application/json" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = `beacon-${TODAY.toISOString().slice(0,10)}.json`;
+  a.click();
+});
+document.getElementById("btn-import").addEventListener("click", () => document.getElementById("import-file").click());
+document.getElementById("import-file").addEventListener("change", async e => {
+  const f = e.target.files[0]; if (!f) return;
+  const txt = await f.text();
+  try { state = JSON.parse(txt); save(); switchView("digest"); toast("Imported"); }
+  catch(err) { toast("Import failed"); }
+});
+document.getElementById("btn-reset-data").addEventListener("click", () => {
+  if (!confirm("Reset to seed dataset? Local edits will be lost.")) return;
+  state = { records: SEED.slice(), weights: { ...DEFAULTS.weights }, digestSize: DEFAULTS.digestSize, slackWebhook: state.slackWebhook || "" };
+  save(); switchView("digest"); toast("Reset");
+});
+
+// Slack
+function buildSlackDigest() {
+  const ranked = state.records.map(r => ({ ...r, score: scoreFor(r) })).sort((a,b) => b.score - a.score).slice(0, state.digestSize);
+  const lines = [`*Beacon — ${fmtDate(TODAY)}*`, `Top ${ranked.length} founder signals`, ""];
+  ranked.forEach((r, i) => {
+    lines.push(`${i+1}. *${r.company}* — ${r.founder} (${r.hq}) — _${r.stage} · ${r.signalType}_  · score *${r.score}*`);
+    lines.push(`    ${r.summary}`);
+    if (r.sourceUrl) lines.push(`    <${r.sourceUrl}|${r.source || "source"}>`);
+  });
+  return lines.join("\n");
+}
+function refreshSlackPreview() { document.getElementById("slack-preview").value = buildSlackDigest(); }
+
+async function postSlack(text) {
+  const url = state.slackWebhook;
+  if (!url) { toast("No webhook configured"); return; }
+  try {
+    const res = await fetch(url, {
+      method: "POST",
+      mode: "no-cors",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ text })
+    });
+    toast("Posted to Slack (or queued — no-cors mode)");
+  } catch (e) {
+    toast("Direct POST blocked. Use the preview below to paste manually.");
+  }
+}
+document.getElementById("btn-slack-send").addEventListener("click", () => postSlack(buildSlackDigest()));
+document.getElementById("btn-slack-send-2").addEventListener("click", () => postSlack(buildSlackDigest()));
+document.getElementById("btn-slack-test").addEventListener("click", () => postSlack(`*Beacon* test ping — ${fmtDate(TODAY)}`));
+
+document.getElementById("btn-refresh-digest").addEventListener("click", renderDigest);
+
+// ---------- add/edit modal ----------
+let editingId = null;
+function openAdd() { editingId = null; fillModal({}); document.getElementById("m-title").textContent = "Add founder"; document.getElementById("modal").classList.add("show"); }
+function editRec(id) {
+  const r = state.records.find(x => x.id === id);
+  if (!r) return;
+  editingId = id;
+  fillModal(r);
+  document.getElementById("m-title").textContent = "Edit founder";
+  document.getElementById("modal").classList.add("show");
+}
+window.editRec = editRec;
+function fillModal(r) {
+  document.getElementById("m-founder").value = r.founder || "";
+  document.getElementById("m-company").value = r.company || "";
+  document.getElementById("m-hq").value = r.hq || "";
+  document.getElementById("m-sector").value = r.sector || "";
+  document.getElementById("m-stage").value = r.stage || "Pre-seed";
+  document.getElementById("m-signal").value = r.signalType || "Funding";
+  document.getElementById("m-date").value = r.signalDate || TODAY.toISOString().slice(0,10);
+  document.getElementById("m-summary").value = r.summary || "";
+  document.getElementById("m-origin").value = r.origin || "";
+  document.getElementById("m-soeu").value = String(!!r.soeu);
+  document.getElementById("m-source").value = r.sourceUrl || "";
+  document.getElementById("m-source-name").value = r.source || "";
+  document.getElementById("m-linkedin").value = r.linkedin || "";
+  document.getElementById("m-website").value = r.website || "";
+  document.getElementById("m-notes").value = r.notes || "";
+}
+function closeModal() { document.getElementById("modal").classList.remove("show"); }
+window.closeModal = closeModal;
+document.getElementById("m-save").addEventListener("click", () => {
+  const rec = {
+    id: editingId || ("f" + Date.now()),
+    founder: document.getElementById("m-founder").value.trim(),
+    company: document.getElementById("m-company").value.trim(),
+    hq: document.getElementById("m-hq").value.trim(),
+    sector: document.getElementById("m-sector").value.trim(),
+    stage: document.getElementById("m-stage").value,
+    signalType: document.getElementById("m-signal").value,
+    signalDate: document.getElementById("m-date").value,
+    summary: document.getElementById("m-summary").value.trim(),
+    origin: document.getElementById("m-origin").value.trim(),
+    soeu: document.getElementById("m-soeu").value === "true",
+    sourceUrl: document.getElementById("m-source").value.trim(),
+    source: document.getElementById("m-source-name").value.trim(),
+    linkedin: document.getElementById("m-linkedin").value.trim(),
+    website: document.getElementById("m-website").value.trim(),
+    notes: document.getElementById("m-notes").value.trim(),
+    status: editingId ? (state.records.find(r => r.id === editingId)?.status || "New") : "New"
+  };
+  if (!rec.founder || !rec.company) { toast("Founder and company required"); return; }
+  if (editingId) { const i = state.records.findIndex(r => r.id === editingId); state.records[i] = rec; }
+  else { state.records.unshift(rec); }
+  save(); closeModal(); toast(editingId ? "Updated" : "Added");
+  switchView(document.querySelector(".nav button.active").dataset.view);
+});
+document.getElementById("btn-add-1").addEventListener("click", openAdd);
+document.getElementById("btn-add-2").addEventListener("click", openAdd);
+document.getElementById("modal").addEventListener("click", e => { if (e.target.id === "modal") closeModal(); });
+
+// ---------- utils ----------
+function escapeHTML(s) { return String(s ?? "").replace(/[&<>"]/g, c => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;" }[c])); }
+function escapeAttr(s) { return escapeHTML(s).replace(/'/g, "&#39;"); }
+function copyToClipboard(text) {
+  navigator.clipboard?.writeText(text).then(() => toast("Copied"), () => {
+    const ta = document.createElement("textarea"); ta.value = text; document.body.appendChild(ta); ta.select();
+    try { document.execCommand("copy"); toast("Copied"); } catch(e) { toast("Copy failed"); }
+    ta.remove();
+  });
+}
+let toastT;
+function toast(msg) {
+  const el = document.getElementById("toast");
+  el.textContent = msg; el.classList.add("show");
+  clearTimeout(toastT);
+  toastT = setTimeout(() => el.classList.remove("show"), 1800);
+}
+
+// ---------- boot ----------
+renderDigest();
+</script>
+</body>
+</html>
