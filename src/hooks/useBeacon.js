@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { SEED, DEFAULTS } from '../data/seed.js';
 
 const STORE_KEY = "beacon.v1";
@@ -26,6 +26,19 @@ function loadState() {
 
 export function useBeacon() {
   const [state, setStateRaw] = useState(loadState);
+
+  // Reload state when the Sales Navigator extension injects leads via localStorage.
+  // The extension dispatches a StorageEvent after writing so we pick it up on the
+  // same tab (native storage events only fire in *other* tabs).
+  useEffect(() => {
+    function handleStorage(e) {
+      if (e.key === STORE_KEY) {
+        setStateRaw(loadState());
+      }
+    }
+    window.addEventListener('storage', handleStorage);
+    return () => window.removeEventListener('storage', handleStorage);
+  }, []);
 
   const setState = useCallback((updater) => {
     setStateRaw(prev => {

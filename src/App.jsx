@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useBeacon } from './hooks/useBeacon.js';
 import Sidebar from './components/Sidebar.jsx';
 import Toast, { useToast } from './components/Toast.jsx';
@@ -15,6 +15,20 @@ export default function App() {
   const [editingId, setEditingId] = useState(null);
   const [outreachId, setOutreachId] = useState(null);
   const { msg, visible, toast } = useToast();
+
+  // Toast when the Sales Navigator extension injects new leads
+  const prevCountRef = useRef(null);
+  useEffect(() => {
+    if (prevCountRef.current === null) {
+      prevCountRef.current = state.records.length;
+      return;
+    }
+    const diff = state.records.length - prevCountRef.current;
+    if (diff > 0) {
+      toast(`✓ ${diff} lead${diff !== 1 ? 's' : ''} imported from Sales Navigator`);
+      prevCountRef.current = state.records.length;
+    }
+  }, [state.records.length]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const {
     state,

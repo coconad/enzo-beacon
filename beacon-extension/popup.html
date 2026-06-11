@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<style>
+:root {
+  --bg: #fafaf7;
+  --panel: #ffffff;
+  --ink: #14110f;
+  --ink-2: #4a4641;
+  --ink-3: #8a857d;
+  --line: #e8e3da;
+  --line-2: #f0ece4;
+  --accent: #b8451f;
+  --accent-soft: #fbe9df;
+  --gold: #c79028;
+  --olive: #5a6b3a;
+  --olive-soft: #eef1e3;
+  --sea: #2c5f73;
+  --sea-soft: #e0ecf1;
+  --font: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  width: 360px;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/* Header */
+.header {
+  display: flex; align-items: center; gap: 10px;
+  padding: 12px 14px; border-bottom: 1px solid var(--line);
+  background: #fbf8f1;
+}
+.brand-mark {
+  width: 26px; height: 26px; border-radius: 8px; flex-shrink: 0;
+  background: radial-gradient(circle at 30% 30%, #f3c969, var(--accent) 70%);
+  box-shadow: inset 0 0 0 1px rgba(20,17,15,.08);
+}
+.brand-name { font-family: var(--serif); font-size: 17px; letter-spacing: .2px; }
+.brand-sub  { font-size: 11px; color: var(--ink-3); }
+
+/* Body */
+.body { padding: 12px 14px; }
+
+/* Status bar */
+.status-bar {
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 10px; border-radius: 8px; margin-bottom: 10px;
+  background: var(--panel); border: 1px solid var(--line);
+  font-size: 12px; color: var(--ink-2);
+}
+.dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; background: var(--line); }
+.dot.green  { background: var(--olive); }
+.dot.amber  { background: var(--gold); }
+.dot.red    { background: var(--accent); }
+
+/* Buttons */
+button { font: inherit; cursor: pointer; }
+.btn {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: var(--panel); border: 1px solid var(--line); border-radius: 7px;
+  padding: 6px 11px; color: var(--ink); font-size: 12.5px;
+}
+.btn:hover:not(:disabled) { border-color: #d6cfc1; }
+.btn:disabled { opacity: .45; cursor: default; }
+.btn-primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+.btn-primary:hover:not(:disabled) { background: #a23d1a; border-color: #a23d1a; }
+.btn-block   { width: 100%; justify-content: center; }
+.btn-ghost   { background: transparent; border-color: transparent; color: var(--ink-3); padding: 6px 8px; }
+.btn-ghost:hover { background: var(--line-2); color: var(--ink); }
+
+/* Action row */
+.actions { display: flex; gap: 6px; margin-bottom: 10px; flex-wrap: wrap; }
+.actions .spacer { flex: 1; }
+
+/* Queue banner */
+.queue-banner {
+  display: flex; align-items: center; justify-content: space-between; gap: 8px;
+  padding: 8px 10px; border-radius: 8px; margin-bottom: 10px;
+  background: var(--olive-soft); border: 1px solid #c8d4a8;
+  font-size: 12px; color: var(--olive);
+}
+.queue-banner.hidden { display: none; }
+
+/* Lead list */
+.lead-list {
+  max-height: 264px; overflow-y: auto;
+  display: flex; flex-direction: column; gap: 5px;
+  margin-bottom: 10px;
+}
+.lead-item {
+  display: flex; align-items: flex-start; gap: 8px;
+  background: var(--panel); border: 1px solid var(--line); border-radius: 8px;
+  padding: 8px 10px; cursor: pointer; transition: border-color .1s;
+}
+.lead-item:hover { border-color: #d6cfc1; }
+.lead-item.checked { border-color: var(--accent); background: var(--accent-soft); }
+.lead-item input[type=checkbox] { margin-top: 2px; flex-shrink: 0; accent-color: var(--accent); }
+.lead-body { min-width: 0; }
+.lead-name { font-weight: 600; font-size: 13px; }
+.lead-sub  { color: var(--ink-3); font-size: 11.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.lead-hint { color: var(--ink-3); font-size: 11px; margin-top: 2px; max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* Pills */
+.pill {
+  display: inline-flex; align-items: center;
+  padding: 1px 7px; border-radius: 999px; font-size: 10.5px;
+  background: var(--line-2); color: var(--ink-2); margin-top: 4px;
+}
+.pill.olive  { background: var(--olive-soft); color: var(--olive); }
+.pill.accent { background: var(--accent-soft); color: var(--accent); }
+.pill.sea    { background: var(--sea-soft);    color: var(--sea); }
+
+/* Empty state */
+.empty {
+  color: var(--ink-3); text-align: center;
+  padding: 22px 14px; font-size: 12.5px; line-height: 1.6;
+}
+.empty b { color: var(--ink-2); }
+
+/* Footer */
+.footer {
+  padding: 8px 14px; border-top: 1px solid var(--line);
+  font-size: 11.5px; color: var(--ink-3);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.footer a { color: var(--sea); cursor: pointer; text-decoration: none; }
+.footer a:hover { text-decoration: underline; }
+
+/* Settings panel */
+.settings-panel {
+  display: none; padding: 10px 14px 14px;
+  border-top: 1px solid var(--line); background: var(--panel);
+}
+.settings-panel.show { display: block; }
+.settings-panel label {
+  display: block; font-size: 11px; color: var(--ink-3);
+  text-transform: uppercase; letter-spacing: .04em;
+  margin: 8px 0 4px;
+}
+.settings-panel input {
+  width: 100%; background: var(--bg); border: 1px solid var(--line); border-radius: 7px;
+  padding: 6px 8px; font: inherit; color: var(--ink); font-size: 12.5px;
+}
+.settings-panel input:focus { outline: 2px solid var(--accent-soft); border-color: var(--accent); }
+.settings-hint { font-size: 11px; color: var(--ink-3); margin-top: 5px; line-height: 1.5; }
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="header">
+  <div class="brand-mark"></div>
+  <div>
+    <div class="brand-name">Beacon</div>
+    <div class="brand-sub">Sales Navigator Bridge</div>
+  </div>
+</div>
+
+<!-- Main body -->
+<div class="body">
+
+  <!-- Page status -->
+  <div class="status-bar">
+    <div class="dot" id="status-dot"></div>
+    <span id="status-text">Checking page…</span>
+  </div>
+
+  <!-- Queue banner (hidden until leads queued) -->
+  <div class="queue-banner hidden" id="queue-banner">
+    <span id="queue-text">— leads in queue</span>
+    <button class="btn btn-primary" id="btn-send" disabled>Send to Beacon</button>
+  </div>
+
+  <!-- Action row -->
+  <div class="actions">
+    <button class="btn" id="btn-scan">🔍 Scan page</button>
+    <button class="btn btn-ghost" id="btn-clear">Clear queue</button>
+    <div class="spacer"></div>
+    <button class="btn" id="btn-open-beacon">Open Beacon ↗</button>
+  </div>
+
+  <!-- Lead list (shown after scan) -->
+  <div id="lead-list" class="lead-list" style="display:none"></div>
+
+  <!-- Empty / hint message -->
+  <div class="empty" id="empty-msg">
+    Navigate to a <b>Sales Navigator lead profile</b> or <b>search results page</b>, then click Scan.
+  </div>
+
+  <!-- Add selected button (shown after scan) -->
+  <button class="btn btn-primary btn-block" id="btn-add" style="display:none">
+    Add selected to queue
+  </button>
+
+</div>
+
+<!-- Footer -->
+<div class="footer">
+  <a id="toggle-settings">⚙ Beacon URL</a>
+  <span id="footer-hint"></span>
+</div>
+
+<!-- Settings panel -->
+<div class="settings-panel" id="settings-panel">
+  <label>Beacon app URL</label>
+  <input type="url" id="beacon-url" placeholder="https://coconad.github.io/enzo-beacon/"/>
+  <p class="settings-hint">
+    Where your Beacon app is hosted. The extension opens this tab and injects imported leads directly into localStorage.
+  </p>
+  <div style="display:flex; gap:6px; margin-top:8px">
+    <button class="btn btn-primary" id="btn-save-settings">Save</button>
+    <button class="btn" id="btn-cancel-settings">Cancel</button>
+  </div>
+</div>
+
+<script src="popup.js"></script>
+</body>
+</html>
