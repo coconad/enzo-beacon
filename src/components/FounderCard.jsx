@@ -1,7 +1,7 @@
 import Pill from './Pill.jsx';
 import { stageTone, signalTone, freshness, daysSince } from '../utils/scoring.js';
 
-export default function FounderCard({ r, showSignal, onDraft, onEdit }) {
+export default function FounderCard({ r, showSignal, onEdit }) {
   const pct = Math.min(100, r.score);
   const days = daysSince(r.signalDate);
   const freshPct = (freshness(r.signalDate) * 100) | 0;
@@ -44,7 +44,6 @@ export default function FounderCard({ r, showSignal, onDraft, onEdit }) {
           {r.website && (
             <a className="src" href={r.website} target="_blank" rel="noopener noreferrer">Site ↗</a>
           )}
-          <button onClick={() => onDraft(r.id)}>Draft outreach</button>
           <button onClick={() => onEdit(r.id)}>Edit</button>
         </div>
       </div>

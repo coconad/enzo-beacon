@@ -2,7 +2,7 @@ import { useState, useCallback } from 'react';
 import { scoreFor, isEarliest, daysSince, fmtDate, TODAY } from '../../utils/scoring.js';
 import FounderCard from '../FounderCard.jsx';
 
-export default function DigestView({ state, setEarliestOnly, onAdd, onDraft, onEdit }) {
+export default function DigestView({ state, setEarliestOnly, onAdd, onEdit }) {
   const { records, weights, digestSize, earliestOnly } = state;
   const [refreshing, setRefreshing] = useState(false);
   const [lastRefreshed, setLastRefreshed] = useState(null);
@@ -57,8 +57,8 @@ export default function DigestView({ state, setEarliestOnly, onAdd, onDraft, onE
 
       <div className="hero">
         <div>
-          <h2>Top signals worth your attention today</h2>
-          <p>Pre-seed-only bias. Ranked by freshness × stage fit × Southern European angle × signal strength.</p>
+          <h2>Stealth founders worth your attention today</h2>
+          <p>First-check bias: founders found before they raise. Ranked by freshness × stage fit × Southern European angle × signal strength.</p>
         </div>
         <div style={{ textAlign: 'right' }}>
           <div className="stat-label">tracking</div>
@@ -81,7 +81,7 @@ export default function DigestView({ state, setEarliestOnly, onAdd, onDraft, onE
           </div>
         ) : (
           top.map(r => (
-            <FounderCard key={r.id} r={r} showSignal onDraft={onDraft} onEdit={onEdit} />
+            <FounderCard key={r.id} r={r} showSignal onEdit={onEdit} />
           ))
         )}
       </div>

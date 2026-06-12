@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { scoreFor, stageTone } from '../../utils/scoring.js';
 import Pill from '../Pill.jsx';
 
-export default function InboxView({ state, onAdd, onEdit, onDraft }) {
+export default function InboxView({ state, onAdd, onEdit }) {
   const { records, weights } = state;
   const [search, setSearch] = useState('');
   const [stage, setStage] = useState('');
@@ -100,7 +100,6 @@ export default function InboxView({ state, onAdd, onEdit, onDraft }) {
                   {r.sourceUrl && <a href={r.sourceUrl} target="_blank" rel="noopener noreferrer">↗</a>}
                   {' '}
                   <button className="btn btn-ghost" onClick={() => onEdit(r.id)}>Edit</button>
-                  <button className="btn btn-ghost" onClick={() => onDraft(r.id)}>Draft</button>
                 </td>
               </tr>
             ))}

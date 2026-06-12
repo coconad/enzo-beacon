@@ -6,14 +6,12 @@ import Modal from './components/Modal.jsx';
 import DigestView from './components/views/DigestView.jsx';
 import InboxView from './components/views/InboxView.jsx';
 import KanbanView from './components/views/KanbanView.jsx';
-import OutreachView from './components/views/OutreachView.jsx';
 import SettingsView from './components/views/SettingsView.jsx';
 
 export default function App() {
   const [view, setView] = useState('digest');
   const [modalOpen, setModalOpen] = useState(false);
   const [editingId, setEditingId] = useState(null);
-  const [outreachId, setOutreachId] = useState(null);
   const { msg, visible, toast } = useToast();
 
   const {
@@ -53,11 +51,6 @@ export default function App() {
     setModalOpen(true);
   }
 
-  function openDraft(id) {
-    setOutreachId(id);
-    setView('outreach');
-  }
-
   const editingRecord = editingId ? state.records.find(r => r.id === editingId) : null;
 
   return (
@@ -69,7 +62,6 @@ export default function App() {
             state={state}
             setEarliestOnly={setEarliestOnly}
             onAdd={openAdd}
-            onDraft={openDraft}
             onEdit={openEdit}
           />
         )}
@@ -78,7 +70,6 @@ export default function App() {
             state={state}
             onAdd={openAdd}
             onEdit={openEdit}
-            onDraft={openDraft}
           />
         )}
         {view === 'kanban' && (
@@ -86,14 +77,6 @@ export default function App() {
             state={state}
             moveRecord={moveRecord}
             onEdit={openEdit}
-            onToast={toast}
-          />
-        )}
-        {view === 'outreach' && (
-          <OutreachView
-            state={state}
-            selectedId={outreachId}
-            setSelectedId={setOutreachId}
             onToast={toast}
           />
         )}
