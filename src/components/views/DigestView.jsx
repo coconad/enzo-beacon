@@ -4,7 +4,7 @@ import FounderCard from '../FounderCard.jsx';
 import MetricCard from '../ui/MetricCard.jsx';
 import PillButton from '../ui/PillButton.jsx';
 
-export default function DigestView({ state, setEarliestOnly, onAdd, onEdit }) {
+export default function DigestView({ state, setEarliestOnly, onAdd, onImport, onEdit }) {
   const { records, weights, digestSize, earliestOnly } = state;
   const [refreshing, setRefreshing] = useState(false);
   const [lastRefreshed, setLastRefreshed] = useState(null);
@@ -53,7 +53,8 @@ export default function DigestView({ state, setEarliestOnly, onAdd, onEdit }) {
               {refreshing ? '↻ Running…' : '↻ Rerun digest'}
             </PillButton>
           </div>
-          <PillButton variant="primary" onClick={onAdd}>+ Add founder</PillButton>
+          <PillButton variant="primary" onClick={onImport}>⇪ Import CSV</PillButton>
+          <PillButton variant="ghost" onClick={onAdd}>+ Add manually</PillButton>
         </div>
       </div>
 

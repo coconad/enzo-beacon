@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { scoreFor, stageTone } from '../../utils/scoring.js';
 import Pill from '../Pill.jsx';
 
-export default function InboxView({ state, onAdd, onEdit }) {
+export default function InboxView({ state, onAdd, onImport, onEdit }) {
   const { records, weights } = state;
   const [search, setSearch] = useState('');
   const [stage, setStage] = useState('');
@@ -44,7 +44,8 @@ export default function InboxView({ state, onAdd, onEdit }) {
           <div className="page-sub">Searchable record of every founder signal Beacon is tracking.</div>
         </div>
         <div className="toolbar">
-          <button className="btn btn-primary" onClick={onAdd}>+ Add founder</button>
+          <button className="btn btn-primary" onClick={onImport}>⇪ Import CSV</button>
+          <button className="btn btn-ghost" onClick={onAdd}>+ Add manually</button>
         </div>
       </div>
 

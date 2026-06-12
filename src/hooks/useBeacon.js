@@ -91,6 +91,29 @@ export function useBeacon() {
     setState(newState);
   }, [setState]);
 
+  // Bulk-add records (CSV import). Dedupes against existing records by
+  // LinkedIn URL, then by founder+company. Returns how many were added.
+  const addRecords = useCallback((incoming) => {
+    let added = 0;
+    setState(prev => {
+      const links = new Set(prev.records.filter(r => r.linkedin).map(r => r.linkedin.toLowerCase()));
+      const names = new Set(prev.records.map(r => (r.founder + '|' + r.company).toLowerCase()));
+      const fresh = incoming.filter(r => {
+        const link = r.linkedin ? r.linkedin.toLowerCase() : '';
+        const name = (r.founder + '|' + r.company).toLowerCase();
+        if (link && links.has(link)) return false;
+        if (names.has(name)) return false;
+        // also dedupe within the incoming batch itself
+        if (link) links.add(link);
+        names.add(name);
+        return true;
+      });
+      added = fresh.length;
+      return fresh.length ? { ...prev, records: [...fresh, ...prev.records] } : prev;
+    });
+    return added;
+  }, [setState]);
+
   const resetToSeed = useCallback((slackWebhook) => {
     setState({
       records: SEED.slice(),
@@ -111,6 +134,7 @@ export function useBeacon() {
     setSlackWebhook,
     setEarliestOnly,
     importState,
+    addRecords,
     resetToSeed,
   };
 }

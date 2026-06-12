@@ -167,16 +167,43 @@ async function refreshQueueBanner() {
   const banner = document.getElementById('queue-banner');
   const text   = document.getElementById('queue-text');
   const sendBtn = document.getElementById('btn-send');
+  const csvBtn  = document.getElementById('btn-csv');
 
   if (queue.length > 0) {
     banner.classList.remove('hidden');
     text.textContent  = `${queue.length} lead${queue.length !== 1 ? 's' : ''} queued`;
     sendBtn.disabled  = false;
+    csvBtn.disabled   = false;
   } else {
     banner.classList.add('hidden');
     sendBtn.disabled  = true;
+    csvBtn.disabled   = true;
   }
 }
+
+// ─────────────────────────────────────────────
+// Download queue as CSV (headers Beacon auto-maps on drop)
+// ─────────────────────────────────────────────
+document.getElementById('btn-csv').addEventListener('click', async () => {
+  const queue = await getQueue();
+  if (!queue.length) return;
+
+  const COLS = ['founder', 'company', 'hq', 'sector', 'stage', 'signalType',
+                'signalDate', 'leftJobDate', 'summary', 'origin', 'source',
+                'sourceUrl', 'linkedin', 'website', 'notes'];
+  const quote = v => '"' + String(v ?? '').replace(/"/g, '""') + '"';
+  const csv = [
+    COLS.join(','),
+    ...queue.map(l => COLS.map(c => quote(l[c])).join(','))
+  ].join('\r\n');
+
+  const url = URL.createObjectURL(new Blob([csv], { type: 'text/csv' }));
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `beacon-leads-${new Date().toISOString().slice(0, 10)}.csv`;
+  a.click();
+  URL.revokeObjectURL(url);
+});
 
 // ─────────────────────────────────────────────
 // Send to Beacon
