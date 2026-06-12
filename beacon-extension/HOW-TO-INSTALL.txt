@@ -1,0 +1,70 @@
+═══════════════════════════════════════════════════════════════
+  BEACON — SALES NAVIGATOR BRIDGE
+  Chrome extension · How to install & use
+═══════════════════════════════════════════════════════════════
+
+WHAT THIS DOES
+--------------
+Pulls founder leads from LinkedIn Sales Navigator straight into
+Beacon — no copy-pasting. Scan a lead profile or a search results
+page, queue the interesting ones, then send them to Beacon in one
+click (or download them as a CSV and drop the file onto Beacon).
+
+
+INSTALL (one-time, ~1 minute)
+-----------------------------
+1. Unzip this folder somewhere permanent (e.g. Documents).
+   ⚠ Don't delete the folder afterwards — Chrome loads the
+   extension from here every time it starts.
+
+2. Open Chrome and go to:  chrome://extensions
+
+3. Turn ON "Developer mode" — toggle in the top-right corner.
+
+4. Click "Load unpacked" (top-left) and select the
+   "beacon-extension" folder you just unzipped.
+
+5. Done. Click the puzzle-piece icon in Chrome's toolbar and pin
+   "Beacon — Sales Navigator Bridge" so it's always visible.
+
+
+FIRST-TIME SETUP
+----------------
+1. Click the Beacon icon in your toolbar.
+2. Click "⚙ Beacon URL" at the bottom of the popup.
+3. Paste the Beacon app URL:  https://enzo-beacon.vercel.app/
+4. Click Save.
+
+
+DAILY USE
+---------
+1. Browse LinkedIn Sales Navigator as usual.
+2. On a lead profile or search results page, click the Beacon icon
+   → "🔍 Scan page".
+3. Untick anyone you don't want, then "Add selected to queue".
+   Repeat on as many pages as you like — the queue keeps growing.
+4. When you're done, click "Send to Beacon". Beacon opens (or
+   refreshes) with the new leads imported and scored.
+
+   Alternative: click "CSV" instead to download the queue as a
+   file, then drag-drop that file anywhere onto the Beacon app.
+
+TIP — On a full lead profile, the extension also reads the
+person's work history. If they've already LEFT their last job
+(no role marked "Present"), Beacon records the leave date and
+shows "left last job Nd ago" — the strongest stealth signal.
+
+
+TROUBLESHOOTING
+---------------
+• "Could not scan" → refresh the LinkedIn tab, then scan again.
+• "Could not reach Beacon tab" → open the Beacon app in a tab,
+  let it fully load, then click "Send to Beacon" again.
+• Leads didn't appear → check the Beacon URL in ⚙ settings
+  matches the address in your browser exactly.
+• After updating the extension (new zip), go to
+  chrome://extensions and click the ↻ reload arrow on the
+  Beacon card.
+
+Questions → ask Nadhi.
+═══════════════════════════════════════════════════════════════
