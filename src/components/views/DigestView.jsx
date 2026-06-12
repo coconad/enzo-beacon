@@ -1,6 +1,8 @@
 import { useState, useCallback } from 'react';
 import { scoreFor, isEarliest, daysSince, fmtDate, TODAY } from '../../utils/scoring.js';
 import FounderCard from '../FounderCard.jsx';
+import MetricCard from '../ui/MetricCard.jsx';
+import PillButton from '../ui/PillButton.jsx';
 
 export default function DigestView({ state, setEarliestOnly, onAdd, onEdit }) {
   const { records, weights, digestSize, earliestOnly } = state;
@@ -47,11 +49,11 @@ export default function DigestView({ state, setEarliestOnly, onAdd, onEdit }) {
                 refreshed {lastRefreshed.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
               </span>
             )}
-            <button className="btn" onClick={rerun} disabled={refreshing} style={{ minWidth: 120 }}>
+            <PillButton onClick={rerun} disabled={refreshing} style={{ minWidth: 120 }}>
               {refreshing ? '↻ Running…' : '↻ Rerun digest'}
-            </button>
+            </PillButton>
           </div>
-          <button className="btn btn-primary" onClick={onAdd}>+ Add founder</button>
+          <PillButton variant="primary" onClick={onAdd}>+ Add founder</PillButton>
         </div>
       </div>
 
@@ -67,10 +69,10 @@ export default function DigestView({ state, setEarliestOnly, onAdd, onEdit }) {
       </div>
 
       <div className="grid cols-4" style={{ marginBottom: 18 }}>
-        <div className="card"><div className="kpi-sub">Fresh this week</div><div className="kpi">{fresh}</div></div>
-        <div className="card"><div className="kpi-sub">Southern Europe</div><div className="kpi">{soeuCount}</div></div>
-        <div className="card"><div className="kpi-sub">In stealth</div><div className="kpi">{stealth}</div></div>
-        <div className="card"><div className="kpi-sub">Avg. score</div><div className="kpi">{avg}</div></div>
+        <MetricCard label="Fresh this week" value={fresh} />
+        <MetricCard label="Southern Europe" value={soeuCount} />
+        <MetricCard label="In stealth" value={stealth} />
+        <MetricCard label="Avg. score" value={avg} />
       </div>
 
       <div style={{ transition: 'opacity 0.3s', opacity: refreshing ? 0.35 : 1 }}>

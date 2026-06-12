@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useBeacon } from './hooks/useBeacon.js';
 import Sidebar from './components/Sidebar.jsx';
+import GradientBackground from './components/ui/GradientBackground.jsx';
 import Toast, { useToast } from './components/Toast.jsx';
 import Modal from './components/Modal.jsx';
 import DigestView from './components/views/DigestView.jsx';
@@ -55,6 +56,7 @@ export default function App() {
 
   return (
     <div className="shell">
+      <GradientBackground />
       <Sidebar view={view} setView={setView} />
       <main className="main">
         {view === 'digest' && (

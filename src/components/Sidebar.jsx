@@ -1,3 +1,5 @@
+import FloatingNav from './ui/FloatingNav.jsx';
+
 const NAV = [
   { key: 'digest', label: 'Daily digest' },
   { key: 'inbox', label: 'Inbox' },
@@ -15,18 +17,7 @@ export default function Sidebar({ view, setView }) {
           <div className="brand-tag">first check · stealth · SoEU</div>
         </div>
       </div>
-      <nav className="nav">
-        {NAV.map(n => (
-          <button
-            key={n.key}
-            className={view === n.key ? 'active' : ''}
-            onClick={() => setView(n.key)}
-          >
-            <span className="dot" />
-            {n.label}
-          </button>
-        ))}
-      </nav>
+      <FloatingNav items={NAV} active={view} onSelect={setView} />
       <div className="side-ext">
         <a className="btn btn-block" href="/beacon-extension.zip" download>
           ⬇ Chrome extension

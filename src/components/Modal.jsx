@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { TODAY } from '../utils/scoring.js';
 
 const EMPTY = {
@@ -11,20 +11,22 @@ const EMPTY = {
 export default function Modal({ open, record, onSave, onClose, onToast }) {
   const [form, setForm] = useState(EMPTY);
 
-  useEffect(() => {
+  // Re-initialise the form whenever the modal (re)opens — state adjustment
+  // during render instead of an effect, so there's no cascading render.
+  const [prevOpen, setPrevOpen] = useState(open);
+  if (open !== prevOpen) {
+    setPrevOpen(open);
     if (open) {
-      if (record) {
-        setForm({
-          ...record,
-          soeu: String(!!record.soeu),
-          signalDate: record.signalDate || TODAY.toISOString().slice(0, 10),
-          leftJobDate: record.leftJobDate || '',
-        });
-      } else {
-        setForm(EMPTY);
-      }
+      setForm(record
+        ? {
+            ...record,
+            soeu: String(!!record.soeu),
+            signalDate: record.signalDate || TODAY.toISOString().slice(0, 10),
+            leftJobDate: record.leftJobDate || '',
+          }
+        : EMPTY);
     }
-  }, [open, record]);
+  }
 
   function set(key, val) {
     setForm(f => ({ ...f, [key]: val }));

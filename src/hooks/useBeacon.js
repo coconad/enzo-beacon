@@ -14,7 +14,9 @@ function loadState() {
       if (missing.length) parsed.records = (parsed.records || []).concat(missing);
       return parsed;
     }
-  } catch (e) {}
+  } catch {
+    // corrupted localStorage — fall back to seed state
+  }
   return {
     records: SEED.slice(),
     weights: { ...DEFAULTS.weights },
