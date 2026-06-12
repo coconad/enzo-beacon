@@ -2,6 +2,7 @@
 
 const QUEUE_KEY    = 'beacon.salesnav.queue';
 const SETTINGS_KEY = 'beacon.extension.settings';
+const DEFAULT_BEACON_URL = 'https://enzo-beacon.vercel.app/';
 
 let scrapedLeads = [];   // leads from the most recent scan
 let selectedIds  = new Set();
@@ -219,7 +220,7 @@ document.getElementById('btn-send').addEventListener('click', async () => {
   let beaconTab  = allTabs.find(t => t.url && isBeaconUrl(t.url, beaconUrl));
 
   if (!beaconTab) {
-    const target = beaconUrl || 'https://coconad.github.io/enzo-beacon/';
+    const target = beaconUrl || DEFAULT_BEACON_URL;
     beaconTab = await chrome.tabs.create({ url: target, active: true });
     await delay(2500); // wait for page to fully load
   } else {
@@ -289,12 +290,15 @@ function mergeLeadsIntoBeacon(leads) {
 }
 
 function isBeaconUrl(url, configured) {
+  // Never inject into code-hosting / LinkedIn pages, even if the URL
+  // happens to contain "enzo-beacon" (e.g. the GitHub repo page).
+  let host;
+  try { host = new URL(url).hostname; } catch { return false; }
+  const blocked = ['github.com', 'gitlab.com', 'bitbucket.org', 'linkedin.com', 'www.linkedin.com'];
+  if (blocked.some(b => host === b || host.endsWith('.' + b))) return false;
+
   if (configured && url.startsWith(configured)) return true;
-  return (
-    url.includes('enzo-beacon') ||
-    url.includes('beacon.html') ||
-    (url.includes('index.html') && !url.includes('linkedin'))
-  );
+  return url.startsWith(DEFAULT_BEACON_URL) || host === 'localhost';
 }
 
 // ─────────────────────────────────────────────
@@ -311,7 +315,7 @@ document.getElementById('btn-clear').addEventListener('click', async () => {
 // ─────────────────────────────────────────────
 document.getElementById('btn-open-beacon').addEventListener('click', async () => {
   const { beaconUrl } = await getSettings();
-  chrome.tabs.create({ url: beaconUrl || 'https://coconad.github.io/enzo-beacon/' });
+  chrome.tabs.create({ url: beaconUrl || DEFAULT_BEACON_URL });
 });
 
 // ─────────────────────────────────────────────
