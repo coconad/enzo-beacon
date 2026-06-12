@@ -1,6 +1,6 @@
 import { STAGE_FIT, SIGNAL_WEIGHT, SIGNAL_TIMING_WEIGHT } from '../data/seed.js';
 
-export const TODAY = new Date("2026-05-18");
+export const TODAY = new Date();
 
 export function fmtDate(d) {
   const dt = new Date(d);
