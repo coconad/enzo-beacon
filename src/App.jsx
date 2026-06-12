@@ -16,6 +16,19 @@ export default function App() {
   const [outreachId, setOutreachId] = useState(null);
   const { msg, visible, toast } = useToast();
 
+  const {
+    state,
+    updateRecord,
+    moveRecord,
+    resetWeights,
+    setWeights,
+    setDigestSize,
+    setSlackWebhook,
+    setEarliestOnly,
+    importState,
+    resetToSeed,
+  } = useBeacon();
+
   // Toast when the Sales Navigator extension injects new leads
   const prevCountRef = useRef(null);
   useEffect(() => {
@@ -29,19 +42,6 @@ export default function App() {
       prevCountRef.current = state.records.length;
     }
   }, [state.records.length]); // eslint-disable-line react-hooks/exhaustive-deps
-
-  const {
-    state,
-    updateRecord,
-    moveRecord,
-    resetWeights,
-    setWeights,
-    setDigestSize,
-    setSlackWebhook,
-    setEarliestOnly,
-    importState,
-    resetToSeed,
-  } = useBeacon();
 
   function openAdd() {
     setEditingId(null);
