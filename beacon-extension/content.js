@@ -31,6 +31,33 @@ function uid(i) {
   return 'sn_' + Date.now() + (i != null ? '_' + i : '');
 }
 
+// Find when the person left their last job by scanning visible experience
+// date ranges like "Jan 2024 – Mar 2026" / "Jan 2024 - Present". If any range
+// is still "Present" they haven't left; otherwise take the latest end date.
+function findLeftJobDate() {
+  const MONTHS = {
+    jan: 0, feb: 1, mar: 2, apr: 3, may: 4, jun: 5,
+    jul: 6, aug: 7, sep: 8, oct: 9, nov: 10, dec: 11
+  };
+  const rangeRe = /([A-Za-z]{3})[a-z]*\.?\s+(\d{4})\s*[–—-]\s*(Present|present|([A-Za-z]{3})[a-z]*\.?\s+(\d{4}))/g;
+
+  const text = document.body.innerText || '';
+  let latestEnd = null;
+  let match;
+  while ((match = rangeRe.exec(text)) !== null) {
+    if (/present/i.test(match[3])) return ''; // still employed somewhere
+    const mon = MONTHS[match[4].slice(0, 3).toLowerCase()];
+    const year = parseInt(match[5], 10);
+    if (mon === undefined || !year) continue;
+    // End of that month = approximate leave date
+    const end = new Date(year, mon + 1, 0);
+    if (!latestEnd || end > latestEnd) latestEnd = end;
+  }
+
+  if (!latestEnd || latestEnd > new Date()) return '';
+  return latestEnd.toISOString().slice(0, 10);
+}
+
 // ---- profile page (/sales/lead/…) ----
 
 function scrapeProfilePage() {
@@ -60,6 +87,8 @@ function scrapeProfilePage() {
     '.artdeco-entity-lockup__caption'
   ]);
 
+  const leftJobDate = findLeftJobDate();
+
   const summary = [name, headline, company ? 'at ' + company : '']
     .filter(Boolean).join(' — ');
 
@@ -72,6 +101,7 @@ function scrapeProfilePage() {
     stage: 'Stealth',
     signalType: 'Career move',
     signalDate: new Date().toISOString().slice(0, 10),
+    leftJobDate,
     summary,
     origin: '',
     soeu: inferSoEU(location + ' ' + name),
@@ -139,6 +169,7 @@ function scrapeSearchResults() {
       stage: 'Stealth',
       signalType: 'Career move',
       signalDate: new Date().toISOString().slice(0, 10),
+      leftJobDate: '', // only inferable on the full profile page
       summary,
       origin: '',
       soeu: inferSoEU(location + ' ' + name),

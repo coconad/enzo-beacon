@@ -5,6 +5,7 @@ export default function FounderCard({ r, showSignal, onEdit }) {
   const pct = Math.min(100, r.score);
   const days = daysSince(r.signalDate);
   const freshPct = (freshness(r.signalDate) * 100) | 0;
+  const leftDays = r.leftJobDate ? daysSince(r.leftJobDate) : null;
 
   return (
     <div className="founder">
@@ -24,6 +25,9 @@ export default function FounderCard({ r, showSignal, onEdit }) {
             : <Pill tone="muted">{r.origin}</Pill>}
           <Pill tone={stageTone(r.stage)}>{r.stage}</Pill>
           <Pill tone={signalTone(r.signalType)}>{r.signalType}</Pill>
+          {leftDays !== null && (
+            <Pill tone="gold" dot>left last job {leftDays === 0 ? 'today' : `${leftDays}d ago`}</Pill>
+          )}
           <Pill tone="muted">{r.status}</Pill>
         </div>
       </div>

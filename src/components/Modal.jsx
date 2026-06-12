@@ -4,7 +4,7 @@ import { TODAY } from '../utils/scoring.js';
 const EMPTY = {
   founder: '', company: '', hq: '', sector: '', stage: 'Pre-seed',
   signalType: 'Funding', signalDate: TODAY.toISOString().slice(0, 10),
-  summary: '', origin: '', soeu: 'false',
+  leftJobDate: '', summary: '', origin: '', soeu: 'false',
   sourceUrl: '', source: '', linkedin: '', website: '', notes: '',
 };
 
@@ -18,6 +18,7 @@ export default function Modal({ open, record, onSave, onClose, onToast }) {
           ...record,
           soeu: String(!!record.soeu),
           signalDate: record.signalDate || TODAY.toISOString().slice(0, 10),
+          leftJobDate: record.leftJobDate || '',
         });
       } else {
         setForm(EMPTY);
@@ -90,6 +91,10 @@ export default function Modal({ open, record, onSave, onClose, onToast }) {
             </select>
           </div>
           <div className="field"><label>Signal date</label><input className="input" type="date" value={form.signalDate} onChange={e => set('signalDate', e.target.value)} /></div>
+        </div>
+        <div className="row">
+          <div className="field"><label>Left last job (date)</label><input className="input" type="date" value={form.leftJobDate} onChange={e => set('leftJobDate', e.target.value)} /></div>
+          <div className="field" />
         </div>
         <div className="field">
           <label>One-line signal summary</label>

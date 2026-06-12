@@ -27,6 +27,15 @@ export default function Sidebar({ view, setView }) {
           </button>
         ))}
       </nav>
+      <div className="side-ext">
+        <a className="btn btn-block" href="/beacon-extension.zip" download>
+          ⬇ Chrome extension
+        </a>
+        <div className="side-ext-hint">
+          Scrapes Sales Navigator leads straight into Beacon. Unzip, then load
+          via chrome://extensions → "Load unpacked".
+        </div>
+      </div>
       <div className="side-foot">
         <b>Beacon</b> surfaces stealth founders before anyone else sees them. Built for <b>first-check investing</b>: <b>stealth + pre-seed</b>, <b>EU/UK/IE</b> with a <b>Southern European</b> lens.<br /><br />
         All edits stored locally on this device.
