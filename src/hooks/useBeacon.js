@@ -9,6 +9,7 @@ function loadState() {
     if (raw) {
       const parsed = JSON.parse(raw);
       if (parsed.earliestOnly === undefined) parsed.earliestOnly = DEFAULTS.earliestOnly;
+      if (!parsed.attio) parsed.attio = { ...DEFAULTS.attio };
       const existing = new Set((parsed.records || []).map(r => r.id));
       const missing = SEED.filter(r => !existing.has(r.id));
       if (missing.length) parsed.records = (parsed.records || []).concat(missing);
@@ -23,6 +24,7 @@ function loadState() {
     digestSize: DEFAULTS.digestSize,
     slackWebhook: DEFAULTS.slackWebhook,
     earliestOnly: DEFAULTS.earliestOnly,
+    attio: { ...DEFAULTS.attio },
   };
 }
 
@@ -114,14 +116,51 @@ export function useBeacon() {
     return added;
   }, [setState]);
 
+  // ---- Outreach list (hybrid curation) ----
+  const addToOutreach = useCallback((id) => {
+    setState(prev => ({
+      ...prev,
+      records: prev.records.map(r => r.id === id ? { ...r, outreach: true, outreachDismissed: false } : r),
+    }));
+  }, [setState]);
+
+  const removeFromOutreach = useCallback((id) => {
+    setState(prev => ({
+      ...prev,
+      records: prev.records.map(r => r.id === id ? { ...r, outreach: false } : r),
+    }));
+  }, [setState]);
+
+  const dismissSuggestion = useCallback((id) => {
+    setState(prev => ({
+      ...prev,
+      records: prev.records.map(r => r.id === id ? { ...r, outreachDismissed: true } : r),
+    }));
+  }, [setState]);
+
+  // Mark records as pushed to Attio (avoids re-pushing duplicates).
+  const markPushed = useCallback((ids) => {
+    const when = new Date().toISOString();
+    const idSet = new Set(ids);
+    setState(prev => ({
+      ...prev,
+      records: prev.records.map(r => idSet.has(r.id) ? { ...r, pushedAt: when } : r),
+    }));
+  }, [setState]);
+
+  const setAttioConfig = useCallback((patch) => {
+    setState(prev => ({ ...prev, attio: { ...DEFAULTS.attio, ...prev.attio, ...patch } }));
+  }, [setState]);
+
   const resetToSeed = useCallback((slackWebhook) => {
-    setState({
+    setState(prev => ({
       records: SEED.slice(),
       weights: { ...DEFAULTS.weights },
       digestSize: DEFAULTS.digestSize,
       slackWebhook: slackWebhook || "",
       earliestOnly: DEFAULTS.earliestOnly,
-    });
+      attio: { ...DEFAULTS.attio, ...prev.attio }, // keep Attio config across reset
+    }));
   }, [setState]);
 
   return {
@@ -135,6 +174,11 @@ export function useBeacon() {
     setEarliestOnly,
     importState,
     addRecords,
+    addToOutreach,
+    removeFromOutreach,
+    dismissSuggestion,
+    markPushed,
+    setAttioConfig,
     resetToSeed,
   };
 }

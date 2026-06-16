@@ -7,6 +7,7 @@ import Toast, { useToast } from './components/Toast.jsx';
 import Modal from './components/Modal.jsx';
 import DigestView from './components/views/DigestView.jsx';
 import InboxView from './components/views/InboxView.jsx';
+import OutreachListView from './components/views/OutreachListView.jsx';
 import KanbanView from './components/views/KanbanView.jsx';
 import SettingsView from './components/views/SettingsView.jsx';
 
@@ -27,6 +28,11 @@ export default function App() {
     setEarliestOnly,
     importState,
     addRecords,
+    addToOutreach,
+    removeFromOutreach,
+    dismissSuggestion,
+    markPushed,
+    setAttioConfig,
     resetToSeed,
   } = useBeacon();
 
@@ -136,6 +142,19 @@ export default function App() {
             onAdd={openAdd}
             onImport={openImport}
             onEdit={openEdit}
+            addToOutreach={addToOutreach}
+            removeFromOutreach={removeFromOutreach}
+          />
+        )}
+        {view === 'outreach' && (
+          <OutreachListView
+            state={state}
+            addToOutreach={addToOutreach}
+            removeFromOutreach={removeFromOutreach}
+            dismissSuggestion={dismissSuggestion}
+            markPushed={markPushed}
+            onToast={toast}
+            onGoSettings={() => setView('settings')}
           />
         )}
         {view === 'kanban' && (
@@ -153,6 +172,7 @@ export default function App() {
             resetWeights={resetWeights}
             setDigestSize={setDigestSize}
             setSlackWebhook={setSlackWebhook}
+            setAttioConfig={setAttioConfig}
             importState={importState}
             resetToSeed={resetToSeed}
             onToast={toast}

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { scoreFor, stageTone } from '../../utils/scoring.js';
 import Pill from '../Pill.jsx';
 
-export default function InboxView({ state, onAdd, onImport, onEdit }) {
+export default function InboxView({ state, onAdd, onImport, onEdit, addToOutreach, removeFromOutreach }) {
   const { records, weights } = state;
   const [search, setSearch] = useState('');
   const [stage, setStage] = useState('');
@@ -98,6 +98,14 @@ export default function InboxView({ state, onAdd, onImport, onEdit }) {
                 <td>{r.signalDate}</td>
                 <td>{r.status}</td>
                 <td className="row-actions">
+                  <button
+                    className={`star-btn${r.outreach ? ' on' : ''}`}
+                    title={r.outreach ? 'On outreach list — click to remove' : 'Add to outreach list'}
+                    aria-pressed={!!r.outreach}
+                    onClick={() => (r.outreach ? removeFromOutreach(r.id) : addToOutreach(r.id))}
+                  >
+                    {r.outreach ? '★' : '☆'}
+                  </button>
                   {r.sourceUrl && <a href={r.sourceUrl} target="_blank" rel="noopener noreferrer">↗</a>}
                   {' '}
                   <button className="btn btn-ghost" onClick={() => onEdit(r.id)}>Edit</button>

@@ -16,10 +16,29 @@ function buildSlackDigest(state) {
 const TIMING_LABEL = { 'pre-product': 'pre-product', 'pre-raise': 'pre-raise', 'post-raise': 'post-raise' };
 const TIMING_COLOR = { 'pre-product': 'var(--olive)', 'pre-raise': 'var(--accent)', 'post-raise': 'var(--muted, #888)' };
 
-export default function SettingsView({ state, setWeights, resetWeights, setDigestSize, setSlackWebhook, importState, resetToSeed, onToast }) {
+export default function SettingsView({ state, setWeights, resetWeights, setDigestSize, setSlackWebhook, setAttioConfig, importState, resetToSeed, onToast }) {
   const { weights, digestSize, slackWebhook } = state;
+  const attio = state.attio || { listId: '', threshold: 70 };
   const fileRef = useRef();
   const [sourceFilter, setSourceFilter] = useState('all');
+  const [attioTesting, setAttioTesting] = useState(false);
+
+  async function testAttio() {
+    setAttioTesting(true);
+    try {
+      const res = await fetch('/api/attio-push', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ test: true, listId: attio.listId || '' }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (res.ok) onToast(`✓ Attio connected${data.workspace ? ' — ' + data.workspace : ''}`);
+      else onToast(data.error || `Attio test failed (${res.status})`);
+    } catch {
+      onToast('Attio test failed — deploy with ATTIO_API_KEY set in Vercel');
+    }
+    setAttioTesting(false);
+  }
 
   function updateWeight(key, val) {
     setWeights({ ...weights, [key]: +val });
@@ -68,6 +87,37 @@ export default function SettingsView({ state, setWeights, resetWeights, setDiges
       </div>
 
       <div className="settings">
+        <div className="card" style={{ gridColumn: '1/-1' }}>
+          <h3>Attio integration</h3>
+          <div className="page-sub" style={{ marginBottom: 10 }}>
+            Push your priority outreach list straight to an Attio People list. Your API key stays
+            server-side as a Vercel env var (<code>ATTIO_API_KEY</code>) — only the non-secret list ID is stored here.
+          </div>
+          <label style={{ display: 'block', fontSize: 11, fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.06em', color: 'var(--ink-3)', marginBottom: 5 }}>
+            Attio list ID
+          </label>
+          <input
+            className="input"
+            placeholder="e.g. 1a2b3c4d-5e6f-7890-…"
+            value={attio.listId}
+            onChange={e => setAttioConfig({ listId: e.target.value.trim() })}
+            style={{ width: '100%', marginBottom: 12 }}
+          />
+          <div className="weight-row">
+            <div>Suggestion threshold</div>
+            <input type="range" min="0" max="140" value={attio.threshold} onChange={e => setAttioConfig({ threshold: +e.target.value })} />
+            <div className="val">{attio.threshold}</div>
+          </div>
+          <button className="btn" onClick={testAttio} disabled={attioTesting}>
+            {attioTesting ? 'Testing…' : 'Test connection'}
+          </button>
+          <div className="page-sub" style={{ marginTop: 10 }}>
+            Set <code>ATTIO_API_KEY</code> in Vercel → Project → Settings → Environment Variables (generate a key
+            in Attio → Workspace settings → Developers). Find the list ID in Attio: open your People list — the
+            ID is the last segment of the URL.
+          </div>
+        </div>
+
         <div className="card">
           <h3>Ranking weights</h3>
           <div className="page-sub" style={{ marginBottom: 10 }}>

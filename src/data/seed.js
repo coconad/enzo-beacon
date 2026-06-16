@@ -66,6 +66,9 @@ export const DEFAULTS = {
   digestSize: 10,
   slackWebhook: "",
   earliestOnly: true,
+  // Attio CRM handoff. The API key is NOT stored here — it lives server-side
+  // as a Vercel env var (ATTIO_API_KEY). Only the non-secret config is local.
+  attio: { listId: "", threshold: 70 },
 };
 
 export const STAGE_FIT = { "Stealth": 1.0, "Pre-seed": 1.0, "Seed": 0.15, "Seed extension": 0.05, "Series A": 0.0 };
